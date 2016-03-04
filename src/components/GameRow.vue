@@ -33,16 +33,16 @@
 </template>
 
 <script>
-    import { setStatus, setTime } from '../vuex/actions'
+    import { setStatus, setTime } from '../vuex/actions';
 
     export default {
         props: ['game'],
 
-        data: function () {
+        data() {
             return {
                 opened: false,
-                time: ''
-            }
+                time: '',
+            };
         },
 
         vuex: {
@@ -51,24 +51,24 @@
             },
             actions: {
                 setStatus,
-                setTime
-            }
+                setTime,
+            },
         },
 
         methods: {
-            changeStatus (status) {
-                this.setStatus(this.game.id, status)
+            changeStatus(status) {
+                this.setStatus(this.game.id, status);
             },
 
-            open () {
-                this.opened = !this.opened
+            open() {
+                this.opened = !this.opened;
             },
 
-            updateTime () {
-                this.setTime(this.game.id, this.time)
-            }
-        }
-    }
+            updateTime() {
+                this.setTime(this.game.id, this.time);
+            },
+        },
+    };
 </script>
 
 <style lang="sass">

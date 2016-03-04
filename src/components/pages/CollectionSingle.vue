@@ -14,34 +14,30 @@
 </template>
 
 <script>
-    import GameTable from '../GameTable'
-    import GameListAdd from '../GameListAdd'
-    import ProfileBanner from '../ProfileBanner'
-
-    import { selectedCollection } from '../../vuex/getters'
+    import GameTable from '../GameTable';
+    import GameListAdd from '../GameListAdd';
+    import ProfileBanner from '../ProfileBanner';
 
     export default {
 
         vuex: {
             state: {
-                collection: function (state) {
-                    return state.collections.collections.find(collection => {
-                        return collection.id === parseInt(this.$route.params.collection_id, 10)
-                    })
-                }
+                collection(state) {
+                    return state.collections.collections.find(collection => collection.id === parseInt(this.$route.params.collection_id, 10));
+                },
             },
             actions: {
 
-            }
+            },
         },
 
         components: {
             GameTable,
             GameListAdd,
-            ProfileBanner
-        }
+            ProfileBanner,
+        },
 
-    }
+    };
 </script>
 
 <style lang="sass">

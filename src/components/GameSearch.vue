@@ -1,10 +1,18 @@
 <template>
     <span class="game-search">
 
-        <input v-model="game" @click="open" @keyup.down="moveSelected(1)" @keyup.up="moveSelected(-1)" @keyup="doSearch" @keyup.enter="addGame2" />
+        <input v-model="game"
+            @click="open"
+            @keyup.down="moveSelected(1)"
+            @keyup.up="moveSelected(-1)"
+            @keyup="doSearch"
+            @keyup.enter="addGame2" />
 
         <ul class="search-list" v-show="opened">
-            <li v-for="game in list" class="{{$index === selected ? 'selected' : ''}}" @mouseover="selected = $index" @click="addGame2">
+            <li v-for="game in list"
+                class="{{$index === selected ? 'selected' : ''}}"
+                @mouseover="selected = $index"
+                @click="addGame2">
                 {{ game.name }}
                 <template v-if="filter.type === '*'"> - {{ game.platform_id }}</template>
             </li>
@@ -14,81 +22,80 @@
 </template>
 
 <script>
-    import { addGame } from '../vuex/actions'
+    import { addGame } from '../vuex/actions';
 
     export default {
-        data () {
+        data() {
             return {
                 game: '',
                 list: [],
                 selected: 0,
-                opened: false
-            }
+                opened: false,
+            };
         },
 
         vuex: {
             state: {
                 possible: store => store.games.possible,
-                filter: store => store.games.currentFilter
+                filter: store => store.games.currentFilter,
             },
             actions: {
-                addGame
-            }
+                addGame,
+            },
         },
 
         methods: {
-            addGame2 () {
+            addGame2() {
                 if (this.list.length) {
-                    this.addGame(this.list[this.selected])
-                    this.list = []
-                    this.game = ''
-                    this.opened = false
+                    this.addGame(this.list[this.selected]);
+                    this.list = [];
+                    this.game = '';
+                    this.opened = false;
                 }
             },
 
-            doSearch (event) {
+            doSearch(event) {
                 if (event.keyCode > 40 || event.keyCode < 37) {
                     if (this.game.length > 0) {
                         this.list = this.possible.filter(game => {
-                            return this.filter.type === '*'
-                            ? game.name.match(new RegExp(`^${this.game}`, 'i'))
-                            : game.name.match(new RegExp(`^${this.game}`, 'i')) && game.platform_id === this.filter.type
-                        })
-                        this.selected = 0
-                        this.opened = true
+                            const reg = new RegExp(`^${this.game}`, 'i');
+                            return this.filter.type === '*' ? game.name.match(reg) : game.name.match(reg) && game.platform_id === this.filter.type;
+                        }
+                        );
+                        this.selected = 0;
+                        this.opened = true;
                     } else {
-                        this.list = []
-                        this.opened = false
+                        this.list = [];
+                        this.opened = false;
                     }
                 }
             },
 
-            moveSelected (number) {
-                const total = this.list.length - 1
+            moveSelected(number) {
+                const total = this.list.length - 1;
 
                 if (this.selected === 0 && number === -1) {
-                    this.selected = total
+                    this.selected = total;
                 } else if (this.selected === total && number === 1) {
-                    this.selected = 0
+                    this.selected = 0;
                 } else {
-                    this.selected = this.selected + number
+                    this.selected = this.selected + number;
                 }
             },
 
-            open () {
+            open() {
                 setTimeout(() => {
-                    this.opened = true
-                }, 15)
-            }
+                    this.opened = true;
+                }, 15);
+            },
         },
 
         events: {
-            'hide::dropdown' () {
-                if (this.opened) this.opened = false
-            }
-        }
-    }
-
+            'hide::dropdown'() {
+                if (this.opened) this.opened = false;
+            },
+        },
+    };
 </script>
 
 <style lang="sass">

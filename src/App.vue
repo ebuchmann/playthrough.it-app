@@ -37,9 +37,9 @@
 </template>
 
 <script>
-    import store from './vuex/store'
-    import LoginModal from './components/LoginModal'
-    import ClickMenu from './components/ClickMenu'
+    import store from './vuex/store';
+    import LoginModal from './components/LoginModal';
+    import ClickMenu from './components/ClickMenu';
 
     export default {
         store,
@@ -49,34 +49,34 @@
             },
             actions: {
 
-            }
+            },
         },
 
         components: {
             LoginModal,
-            ClickMenu
+            ClickMenu,
         },
 
         computed: {
-            username () {
-                return 'ebuchmann'
-            }
+            username() {
+                return 'ebuchmann';
+            },
         },
 
         methods: {
-            close () {
-                console.log('send close')
-                this.$broadcast('hide::dropdown')
+            close() {
+                debug('send close');
+                this.$broadcast('hide::dropdown');
             },
-            doOpen () {
-                debug('aa')
-            }
+            doOpen() {
+                debug('aa');
+            },
         },
 
-        ready: function () {
-            this.$broadcast('login::check-user')
-        }
-    }
+        ready() {
+            this.$broadcast('login::check-user');
+        },
+    };
 </script>
 
 <style lang="sass">

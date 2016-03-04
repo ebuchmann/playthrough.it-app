@@ -4,7 +4,9 @@
             {{ currentFilter.name }}
         </span>
         <ul class="filters {{opened ? 'opened' : ''}}">
-            <li class="item {{filter.name === currentFilter.name ? 'selected' : ''}}" v-for="filter in allFilters" @click="changeFilter($index)">
+            <li class="item {{filter.name === currentFilter.name ? 'selected' : ''}}"
+                v-for="filter in allFilters"
+                @click="changeFilter($index)">
                 {{ filter.name }}
             </li>
         </ul>
@@ -12,39 +14,39 @@
 </template>
 
 <script>
-    import { changeFilter } from '../vuex/actions'
+    import { changeFilter } from '../vuex/actions';
 
     export default {
-        data () {
+        data() {
             return {
-                opened: false
-            }
+                opened: false,
+            };
         },
 
         vuex: {
             state: {
                 allFilters: store => store.games.allFilters,
-                currentFilter: store => store.games.currentFilter
+                currentFilter: store => store.games.currentFilter,
             },
             actions: {
-                changeFilter
-            }
+                changeFilter,
+            },
         },
 
         methods: {
-            open () {
+            open() {
                 setTimeout(() => {
-                    this.opened = true
-                }, 15)
-            }
+                    this.opened = true;
+                }, 15);
+            },
         },
 
         events: {
-            'hide::dropdown' () {
-                if (this.opened) this.opened = false
-            }
-        }
-    }
+            'hide::dropdown'() {
+                if (this.opened) this.opened = false;
+            },
+        },
+    };
 </script>
 
 <style lang="sass">

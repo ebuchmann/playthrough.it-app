@@ -9,8 +9,8 @@
 </template>
 
 <script>
-    import GameSearch from './GameSearch'
-    import PlatformFilter from './PlatformFilter'
+    import GameSearch from './GameSearch';
+    import PlatformFilter from './PlatformFilter';
 
     export default {
         vuex: {
@@ -19,14 +19,14 @@
             },
             actions: {
 
-            }
+            },
         },
 
         components: {
             GameSearch,
-            PlatformFilter
-        }
-    }
+            PlatformFilter,
+        },
+    };
 </script>
 
 <style lang="sass">

@@ -6,7 +6,7 @@ export const state = {
             games: '293',
             completed: '131',
             current: 'Ultima 4, SMS',
-            owner: 'ebuchmann'
+            owner: 'ebuchmann',
         },
         {
             id: 2,
@@ -14,16 +14,16 @@ export const state = {
             games: '548',
             completed: '14',
             current: 'Resident Evil, GBC',
-            owner: 'ebuchmann'
-        }
-    ]
-}
+            owner: 'ebuchmann',
+        },
+    ],
+};
 
 export const mutations = {
 
-}
+};
 
 export default {
     state,
-    mutations
-}
+    mutations,
+};

@@ -21,34 +21,32 @@
 </template>
 
 <script>
-    import GameRow from './GameRow'
+    import GameRow from './GameRow';
 
     export default {
         vuex: {
             state: {
-                games: store => store.games.current
+                games: store => store.games.current,
             },
             actions: {
 
-            }
+            },
         },
 
         components: {
-            GameRow
+            GameRow,
         },
 
         computed: {
-            totalGames () {
-                return this.games.length
+            totalGames() {
+                return this.games.length;
             },
 
-            finished () {
-                return this.games.filter(game => {
-                    return game.status === 'Finished'
-                }).length
-            }
-        }
-    }
+            finished() {
+                return this.games.filter(game => game.status === 'Finished').length;
+            },
+        },
+    };
 </script>
 
 <style lang="sass">

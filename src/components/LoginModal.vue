@@ -8,14 +8,14 @@
 </template>
 
 <script>
-    import { currentUser } from '../api/user'
-    import { setUser } from '../vuex/actions'
+    import { currentUser } from '../api/user';
+    import { setUser } from '../vuex/actions';
 
     export default {
-        data () {
+        data() {
             return {
-                activeLogin: false
-            }
+                activeLogin: false,
+            };
         },
 
         vuex: {
@@ -23,48 +23,47 @@
 
             },
             actions: {
-                setUser
-            }
+                setUser,
+            },
         },
 
         methods: {
-            toggle () {
-                this.activeLogin ? this.activeLogin = false : this.activeLogin = true
+            toggle() {
+                this.activeLogin = !this.activeLogin;
             },
 
-            twitterLogin () {
-                const popup = window.open('http://localhost:3033/auth/twitter', 'Twitter', 'scrollbars=yes,width=650,height=500')
+            twitterLogin() {
+                const popup = window.open('http://localhost:3033/auth/twitter', 'Twitter', 'scrollbars=yes,width=650,height=500');
 
                 this._oauthInterval = window.setInterval(() => {
                     if (popup.closed) {
-                        window.clearInterval(this._oauthInterval)
+                        window.clearInterval(this._oauthInterval);
 
-                        this.fetchUsername()
-                        this.toggle()
-
+                        this.fetchUsername();
+                        this.toggle();
                     }
-                }, 200)
+                }, 200);
             },
 
-            fetchUsername () {
+            fetchUsername() {
                 currentUser().then(res => {
-                    setUser(res)
+                    setUser(res);
                 }).catch(err => {
-                    debug(err)
-                })
-            }
+                    debug(err);
+                });
+            },
         },
 
         events: {
-            'toggle::login-modal' () {
-                this.toggle()
+            'toggle::login-modal'() {
+                this.toggle();
             },
 
-            'login::check-user' () {
-                this.fetchUsername()
-            }
-        }
-    }
+            'login::check-user'() {
+                this.fetchUsername();
+            },
+        },
+    };
 </script>
 
 <style lang="sass">

@@ -1,29 +1,27 @@
 <template>
     <div v-if="opened" class="add-collection">
 
-
-
     </div>
 </template>
 
 <script>
     export default {
 
-        data () {
+        data() {
             return {
-                opened: false
-            }
+                opened: false,
+            };
         },
 
         events: {
-            'addCollection::open-modal' () {
-                debug('open modal')
-                this.opened = !this.opened
-                debug(this.opened)
-            }
-        }
+            'addCollection::open-modal'() {
+                debug('open modal');
+                this.opened = !this.opened;
+                debug(this.opened);
+            },
+        },
 
-    }
+    };
 </script>
 
 <style lang="sass">

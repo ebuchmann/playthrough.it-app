@@ -22,32 +22,32 @@
 </template>
 
 <script>
-    import ProfileBanner from '../ProfileBanner'
-    import CollectionCard from '../CollectionCard'
-    import AddCollection from '../AddCollection'
+    import ProfileBanner from '../ProfileBanner';
+    import CollectionCard from '../CollectionCard';
+    import AddCollection from '../AddCollection';
 
     export default {
         vuex: {
             state: {
-                collections: store => store.collections.collections
+                collections: store => store.collections.collections,
             },
             actions: {
 
-            }
+            },
         },
 
         methods: {
-            addCollection () {
-                this.$broadcast('addCollection::open-modal')
-            }
+            addCollection() {
+                this.$broadcast('addCollection::open-modal');
+            },
         },
 
         components: {
             ProfileBanner,
             CollectionCard,
-            AddCollection
-        }
-    }
+            AddCollection,
+        },
+    };
 </script>
 
 <style lang="sass">

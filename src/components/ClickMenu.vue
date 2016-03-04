@@ -11,26 +11,26 @@
 
 <script>
     export default {
-        data () {
+        data() {
             return {
-                opened: false
-            }
+                opened: false,
+            };
         },
 
         methods: {
-            open () {
+            open() {
                 setTimeout(() => {
-                    this.opened = true
-                }, 15)
-            }
+                    this.opened = true;
+                }, 15);
+            },
         },
 
         events: {
-            'hide::dropdown' () {
-                if (this.opened) this.opened = false
-            }
-        }
-    }
+            'hide::dropdown'() {
+                if (this.opened) this.opened = false;
+            },
+        },
+    };
 </script>
 
 <style lang="sass">

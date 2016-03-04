@@ -1,6 +1,6 @@
 <template>
     <div class="home-page">
-        
+
         <div class="container">
             <div class="left">
                 {{ user | json }}
@@ -16,27 +16,28 @@
 </template>
 
 <script>
-    import hub from '../../api/githubtest'
+    import hub from '../../api/githubtest';
 
     export default {
-        data () {
+        data() {
             return {
-                user: 'before'
-            }
+                user: 'before',
+            };
         },
 
         methods: {
-            test () {
+            test() {
                 hub.getUser()
                     .then(res => {
-                        this.user = res
-                    })
-            }
+                        this.user = res;
+                    });
+            },
         },
 
         components: {
-        }
-    }
+
+        },
+    };
 </script>
 
 <style>

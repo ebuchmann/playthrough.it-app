@@ -10,12 +10,12 @@
 
 <script>
     export default {
-        data () {
+        data() {
             return {
-                banner: '../assets/banner/1500x500.png'
-            }
-        }
-    }
+                banner: '../assets/banner/1500x500.png',
+            };
+        },
+    };
 </script>
 
 <style lang="sass">

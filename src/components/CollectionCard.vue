@@ -30,13 +30,13 @@
 <script>
     export default {
         computed: {
-            percent () {
-                return (this.collection.completed / this.collection.games * 100).toFixed(1)
-            }
+            percent() {
+                return (this.collection.completed / this.collection.games * 100).toFixed(1);
+            },
         },
 
-        props: ['collection']
-    }
+        props: ['collection'],
+    };
 </script>
 
 <style>
