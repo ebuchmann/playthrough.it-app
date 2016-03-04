@@ -1,0 +1,23 @@
+{
+  "name": "playthroughit",
+  "description": "Play Through It",
+  "main": "",
+  "authors": [
+    "Eric Buchmann <eric.buchmann@popart.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "es6"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "susy": "^2.2.12"
+  }
+}

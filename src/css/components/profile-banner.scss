@@ -1,0 +1,32 @@
+.profile-banner {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    margin-bottom: 40px;
+
+    @include breakpoint(md) {
+        height: 240px;
+    }
+    @include breakpoint(lg) {
+        height: 300px;
+    }
+    @include breakpoint(xl) {
+        height: 380px;
+    }
+    @include breakpoint(vl) {
+        height: 460px;
+    }
+
+    > img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        margin: auto 0;
+        width: 100%;
+    }
+}
