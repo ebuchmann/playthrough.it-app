@@ -13,15 +13,6 @@
     import PlatformFilter from './PlatformFilter';
 
     export default {
-        vuex: {
-            state: {
-
-            },
-            actions: {
-
-            },
-        },
-
         components: {
             GameSearch,
             PlatformFilter,

@@ -1,19 +1,12 @@
-// Vendor
-@import '../../bower_components/susy/sass/susy';
-
-// Partials
-@import 'variables';
-@import 'reboot';
-@import 'mixins';
-@import 'breakpoint';
+// Includes
+@import 'includes';
 
 // Files
+@import 'reboot';
 @import 'circles';
 
 // Components
 @import 'components/top-nav';
-@import 'components/profile-banner';
-@import 'components/collection-card';
 
 .row {
     @include clearfix;
@@ -43,4 +36,11 @@
     @include breakpoint(lg) {
         @include gallery(4 of 12);
     }
+}
+
+.col-6 {
+    @include span(6 of 12);
+}
+.col-6-last {
+    @include span(6 of 12 last);
 }

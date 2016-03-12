@@ -11,18 +11,16 @@
                     </a>
 
                     <div class="top-links">
+                        <a v-link="{ name: 'home' }">Home</a>
                         <a v-link="{ name: 'collections' }">Collections</a>
-                        <a v-link="{ name: 'profile' }">Profile</a>
-                        <template v-if="username">
-                            <click-menu class="user-link">
-                                <span slot="menu" class="button"> {{ username }}</span>
-                                <div slot="content" class="top-menu-dropdown">
-                                    <a v-link="{ name: 'collections' }">Collections</a>
-                                    <a v-link="{ name: 'profile' }">Profile</a>
-                                </div>
-                            </click-menu>
-                        </template>
-                        <a v-else @click="$broadcast('toggle::login-modal')">Login / Signup</a>
+                        <click-menu class="user-link">
+                            <span slot="menu" class="button"> {{ username }}</span>
+                            <div slot="content" class="top-menu-dropdown">
+                                <a v-link="{ name: 'collections' }">Collections</a>
+                                <a v-link="{ name: 'profile' }">Profile</a>
+                                <a href="#">Logout</a>
+                            </div>
+                        </click-menu>
                     </ul>
                 </nav>
             </div>
@@ -31,26 +29,19 @@
         <router-view></router-view>
 
         <footer>
-
+            <img class="icon" src="./assets/footer.png" />
+            <p class="copyright">&copy;{{ new Date().getFullYear() }} PlayThrough.it</p>
         </footer>
     </div>
 </template>
 
 <script>
-    import store from './vuex/store';
-    import LoginModal from './components/LoginModal';
-    import ClickMenu from './components/ClickMenu';
+    import store from 'store/store';
+    import LoginModal from 'component/LoginModal';
+    import ClickMenu from 'component/ClickMenu';
 
     export default {
         store,
-        vuex: {
-            state: {
-
-            },
-            actions: {
-
-            },
-        },
 
         components: {
             LoginModal,
@@ -67,9 +58,6 @@
             close() {
                 debug('send close');
                 this.$broadcast('hide::dropdown');
-            },
-            doOpen() {
-                debug('aa');
             },
         },
 
@@ -88,28 +76,28 @@
 
     footer {
         min-height: 50px;
-        background: url(assets/footer.png) no-repeat center center;
         position: relative;
-        margin: 15px 0;
+        margin: 35px 20px;
 
         &::before {
             content: '';
             height: 2px;
-            width: 47.5%;
+            width: 100%;
             background-color: #a9a9a9;
             position: absolute;
-            top: 22px;
+            top: 20px;
             margin-right: 15px;
         }
 
-        &::after {
-            content: '';
-            height: 2px;
-            width: 47.5%;
-            background-color: #a9a9a9;
-            position: absolute;
-            top: 22px;
-            right: 0;
+        > .icon {
+            margin: 0 auto;
+            display: block;
+            position: relative;
+        }
+
+        > .copyright {
+            font-size: .7rem;
+            font-style: italic;
         }
     }
 </style>

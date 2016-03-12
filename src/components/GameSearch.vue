@@ -35,9 +35,9 @@
         },
 
         vuex: {
-            state: {
-                possible: store => store.games.possible,
-                filter: store => store.games.currentFilter,
+            getters: {
+                possible: state => state.games.possible,
+                filter: state => state.games.currentFilter,
             },
             actions: {
                 addGame,
@@ -47,7 +47,7 @@
         methods: {
             addGame2() {
                 if (this.list.length) {
-                    this.addGame(this.list[this.selected]);
+                    this.addGame(this.list[this.selected], this.$route.params.collection_id);
                     this.list = [];
                     this.game = '';
                     this.opened = false;
@@ -99,7 +99,7 @@
 </script>
 
 <style lang="sass">
-    @import '../css/variables';
+    @import '../css/includes';
 
     .game-search {
         position: relative;

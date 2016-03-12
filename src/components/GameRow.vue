@@ -5,12 +5,14 @@
                 <i class="fa"></i>
             </td>
             <td>{{ game.name }}</td>
-            <td>{{ game.platform_id }}</td>
-            <td>{{ game.genres | genre }}</td>
-            <td>{{ game.time | time }}</td>
-            <td>{{ game.completed_on | date}}</td>
+            <td v-if="tracking.platform_id.active">{{ game.platform_id }}</td>
+            <td v-if="tracking.genres.active">{{ game.genres | genre }}</td>
+            <td v-if="tracking.time.active">{{ game.time | time }}</td>
+            <td v-if="tracking.date.active">{{ game.completed_on | date }}</td>
+            <td v-if="tracking.rating.active">{{ game.rating }}</td>
+            <td v-if="tracking.deaths.active">{{ game.deaths }}</td>
         </tr>
-        <tr>
+        <tr class="edit-row">
             <td colspan="100%">
                 <div v-show="opened" transition="expand">
                     <div style="padding: 10px">
@@ -36,7 +38,7 @@
     import { setStatus, setTime } from '../vuex/actions';
 
     export default {
-        props: ['game'],
+        props: ['game', 'tracking'],
 
         data() {
             return {
@@ -46,7 +48,7 @@
         },
 
         vuex: {
-            state: {
+            getters: {
 
             },
             actions: {
@@ -57,7 +59,7 @@
 
         methods: {
             changeStatus(status) {
-                this.setStatus(this.game.id, status);
+                this.setStatus(this.$route.params.collection_id, this.game.id, status);
             },
 
             open() {
@@ -72,18 +74,13 @@
 </script>
 
 <style lang="sass">
-    @import '../css/variables';
+    @import '../css/includes';
 
     .game-row {
-        border-bottom: 1px solid black;
         padding: 5px;
         position: relative;
         background-color: $gray-lighter;
         cursor: pointer;
-
-        &:nth-child(odd) {
-            background-color: $gray-lightest;
-        }
 
         > .icon {
             font-size: 1.6rem;
@@ -127,6 +124,14 @@
                     content: '\f093';
                 }
             }
+        }
+    }
+
+    .edit-row {
+        border-top: 1px solid $gray-light;
+
+        > td {
+            padding: 0;
         }
     }
 
@@ -185,6 +190,8 @@
         overflow: hidden;
         max-height: 2000px;
         transition: all .3s cubic-bezier(0.5, 0, 1, 0);
+        box-shadow: inset 0px 11px 8px -10px $gray-light,
+                    inset 0px -11px 8px -10px $gray-light;
     }
 
     /* .expand-enter defines the starting state for entering */

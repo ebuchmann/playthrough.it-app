@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
+import { configRouter } from './route-config';
 import App from './App';
 
 Vue.use(VueRouter);
@@ -9,36 +10,10 @@ Vue.use(Vuex);
 export const router = new VueRouter({
     history: true,
     linkActiveClass: 'active',
+    saveScrollPosition: true,
 });
 
-// Page Components
-import Home from './components/pages/Home';
-import PublicCollections from './components/pages/PublicCollections';
-import CollectionSingle from './components/pages/CollectionSingle';
-import Profile from './components/pages/Profile';
-import NotFound from './components/pages/NotFound';
-
-router.map({
-    '/': {
-        name: 'home',
-        component: Home,
-    },
-    '/collections': {
-        name: 'collections',
-        component: PublicCollections,
-    },
-    '/collection/:collection_id': {
-        name: 'single_collection',
-        component: CollectionSingle,
-    },
-    '/profile': {
-        name: 'profile',
-        component: Profile,
-    },
-    '*': {
-        component: NotFound,
-    },
-});
+configRouter(router);
 
 window.debug = function (...args) {
     console.log.apply(console, args);
@@ -47,7 +22,10 @@ window.debug = function (...args) {
 // Filters
 Vue.filter('date', value => value ? new Date(value).toISOString().slice(0, 10) : null);
 
-Vue.filter('genre', value => value.join(' / '));
+Vue.filter('genre', value => {
+    if (value) return value.join(' / ');
+    return '';
+});
 
 Vue.filter('stripSpaces', value => value.replace(/ /g, ''));
 
@@ -64,5 +42,10 @@ Vue.filter('time', {
         return new Date(0, 0, 0, time[0], time[1], time[2]);
     },
 });
+
+// Sets up router sync
+import { sync } from 'vuex-router-sync';
+import store from 'store/store';
+sync(store, router);
 
 router.start(App, '#app');

@@ -1,8 +1,5 @@
-import Vue from 'vue';
 import {
-    SET_STATUS,
     SET_TIME,
-    ADD_GAME,
     CHANGE_FILTER,
 } from '../mutation-types';
 
@@ -63,22 +60,6 @@ export const state = {
 };
 
 export const mutations = {
-
-    [SET_STATUS](state, gameId, status) {
-        const foundGame = state.current.find(game => game.id === gameId);
-        if (foundGame) {
-            foundGame.status = status;
-            if (!foundGame.completed_on && status === 'Finished') foundGame.completed_on = new Date();
-        }
-    },
-
-    [ADD_GAME](state, game) {
-        Vue.set(game, 'status', 'Unfinished');
-        Vue.set(game, 'completed_on', '');
-        Vue.set(game, 'time', '');
-        state.current.unshift(game);
-    },
-
     [CHANGE_FILTER](state, filter) {
         state.currentFilter = state.allFilters[filter];
     },

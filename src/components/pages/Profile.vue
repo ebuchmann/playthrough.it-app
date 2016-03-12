@@ -4,10 +4,7 @@
         <profile-banner></profile-banner>
 
         <div class="container">
-            <span class="collection-count">2 of 3 collections</span>
-
-            <button @click="addCollection">Add new collection</button>
-            <add-collection></add-collection>
+            <span class="collection-count">{{ collectionCount }} of {{ maxCollections }} collections</span>
 
             <div class="row">
                 <template v-for="collection in collections">
@@ -15,6 +12,9 @@
                         <collection-card :collection="collection"></collection-card>
                     </div>
                 </template>
+                <div v-if="collectionCount < maxCollections" class="col-3">
+                    <create-collection></create-collection>
+                </div>
             </div>
         </div>
 
@@ -24,12 +24,14 @@
 <script>
     import ProfileBanner from '../ProfileBanner';
     import CollectionCard from '../CollectionCard';
-    import AddCollection from '../AddCollection';
+    import CreateCollection from '../CreateCollection';
 
     export default {
         vuex: {
-            state: {
-                collections: store => store.collections.collections,
+            getters: {
+                collections: state => state.collections,
+                maxCollections: state => state.users.maxCollections,
+                // collectionCount: state => state.collections.length,
             },
             actions: {
 
@@ -37,21 +39,25 @@
         },
 
         methods: {
-            addCollection() {
-                this.$broadcast('addCollection::open-modal');
+
+        },
+
+        computed: {
+            collectionCount() {
+                return Object.keys(this.collections).length;
             },
         },
 
         components: {
             ProfileBanner,
             CollectionCard,
-            AddCollection,
+            CreateCollection,
         },
     };
 </script>
 
 <style lang="sass">
-    @import '../../css/variables';
+    @import '../../css/includes';
 
     .collection-count {
         float: right;

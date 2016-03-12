@@ -106,6 +106,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: .5rem;
 }
 
+input {
+    font-family: $font-family-base;
+    color: $body-color;
+}
+
 // Reset margins on paragraphs
 //
 // Similarly, the top margin on `<p>`s get reset. However, we also reset the

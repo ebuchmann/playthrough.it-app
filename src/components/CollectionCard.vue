@@ -15,13 +15,13 @@
                         </div>
                     </div>
                     <p class="total">
-                        {{ collection.completed }} of {{ collection.games }} games
+                        {{ completedCount }} of {{ gameCount }} games
                     </p>
                 </div>
             </div>
             <div class="bottom">
                 <span class="playing">Currently<br /> playing:</span>
-                <span class="current">{{ collection.current }}</span>
+                <span class="current">{{ inProgress.name || 'No game selected' }}</span>
             </div>
         </div>
     </a>
@@ -29,9 +29,27 @@
 
 <script>
     export default {
+        vuex: {
+            getters: {
+
+            },
+            actions: {
+
+            },
+        },
+
         computed: {
             percent() {
-                return (this.collection.completed / this.collection.games * 100).toFixed(1);
+                return Math.round(10 * (this.completedCount / this.gameCount * 100)) / 10 || 0;
+            },
+            gameCount() {
+                return this.collection.gameList.length;
+            },
+            completedCount() {
+                return this.collection.gameList.filter(game => game.status === 'Finished').length;
+            },
+            inProgress() {
+                return this.collection.gameList.find(game => game.status === 'In Progress') || '';
             },
         },
 
@@ -39,6 +57,74 @@
     };
 </script>
 
-<style>
+<style lang="sass">
+    @import '../css/includes';
+    @import '../css/mixins';
+    @import '../../bower_components/susy/sass/susy';
+
+    .collection-card {
+        background-color: #fff;
+        margin: 30px 0;
+        box-shadow: $light-shadow;
+        transition: $all-medium;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: $medium-shadow;
+        }
+
+        > .top {
+            padding: 15px;
+            @include clearfix;
+
+            > .left {
+                @include span(8 of 12);
+
+                > .title {
+                    color: $dark;
+                }
+
+                > .owner {
+                    font-style: italic;
+                    color: $dark;
+                }
+            }
+            > .right {
+                @include span(4 of 12 last);
+
+                > .c100 {
+                    margin-top: -40px;
+                }
+
+                > .total {
+                    margin: 10px 0 0 0;
+                    font-size: .8rem;
+                    text-align: center;
+                }
+            }
+        }
+
+        > .bottom {
+            padding: 15px;
+            background-color: $blue;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            border-top: 2px solid $blue-dark;
+
+            @include clearfix;
+
+            > .playing {
+                text-align: right;
+                float: left;
+                font-size: .7rem;
+                line-height: 1.2;
+            }
+
+            > .current {
+                padding-left: 15px;
+            }
+        }
+    }
 
 </style>

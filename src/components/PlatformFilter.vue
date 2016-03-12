@@ -24,9 +24,9 @@
         },
 
         vuex: {
-            state: {
-                allFilters: store => store.games.allFilters,
-                currentFilter: store => store.games.currentFilter,
+            getters: {
+                allFilters: state => state.games.allFilters,
+                currentFilter: state => state.games.currentFilter,
             },
             actions: {
                 changeFilter,
@@ -50,7 +50,7 @@
 </script>
 
 <style lang="sass">
-    @import '../css/variables';
+    @import '../css/includes';
 
     .platform-filter {
         position: relative;

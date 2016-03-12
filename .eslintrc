@@ -1,5 +1,9 @@
 {
     "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "node": true
+    },
     "rules": {
         "indent": [2, 4],
         "max-len": [2, 300, {"ignoreUrls": true}],
@@ -7,6 +11,12 @@
         "no-param-reassign": [0]
     },
     "globals": {
-        "debug": true
-    }
+        "debug": true,
+        "$route": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        }
+    },
 }

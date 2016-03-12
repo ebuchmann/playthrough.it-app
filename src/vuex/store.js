@@ -17,5 +17,4 @@ export default new Vuex.Store({
         collections,
     },
     strict: debug,
-    middlewares: debug ? [Vuex.createLogger()] : [],
 });
