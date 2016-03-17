@@ -26,15 +26,17 @@
     import CollectionCard from '../CollectionCard';
     import CreateCollection from '../CreateCollection';
 
+    import { getAllCollections } from 'store/collections/actions';
+
     export default {
         vuex: {
             getters: {
-                collections: state => state.collections,
+                collections: state => state.collections.collections,
                 maxCollections: state => state.users.maxCollections,
                 // collectionCount: state => state.collections.length,
             },
             actions: {
-
+                getAllCollections,
             },
         },
 
@@ -52,6 +54,11 @@
             ProfileBanner,
             CollectionCard,
             CreateCollection,
+        },
+
+        ready() {
+            debug('start');
+            this.getAllCollections();
         },
     };
 </script>

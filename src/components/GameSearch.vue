@@ -13,8 +13,8 @@
                 class="{{$index === selected ? 'selected' : ''}}"
                 @mouseover="selected = $index"
                 @click="addGame2">
-                {{ game.name }}
-                <template v-if="filter.type === '*'"> - {{ game.platform_id }}</template>
+                {{ game.title }}
+                <template v-if="filter.type === '*'"> - {{ game.platform }}</template>
             </li>
         </ul>
 
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-    import { addGame } from '../vuex/actions';
+    import { gameSearch } from 'store/games/actions';
+    import { addGame } from 'store/gamelist/actions';
 
     export default {
         data() {
             return {
                 game: '',
-                list: [],
                 selected: 0,
                 opened: false,
             };
@@ -36,36 +36,30 @@
 
         vuex: {
             getters: {
-                possible: state => state.games.possible,
-                filter: state => state.games.currentFilter,
+                possible: ({ games }) => games.possible,
+                filter: ({ games }) => games.currentFilter,
+                list: ({ games }) => games.results,
             },
             actions: {
                 addGame,
+                gameSearch,
             },
         },
 
         methods: {
             addGame2() {
                 if (this.list.length) {
-                    this.addGame(this.list[this.selected], this.$route.params.collection_id);
-                    this.list = [];
-                    this.game = '';
-                    this.opened = false;
+                    this.addGame(this.$route.params.collection_id, this.list[this.selected]._id);
                 }
             },
 
             doSearch(event) {
-                if (event.keyCode > 40 || event.keyCode < 37) {
+                if (event.keyCode > 40 || event.keyCode < 37 && event.keyCode !== 13) {
                     if (this.game.length > 0) {
-                        this.list = this.possible.filter(game => {
-                            const reg = new RegExp(`^${this.game}`, 'i');
-                            return this.filter.type === '*' ? game.name.match(reg) : game.name.match(reg) && game.platform_id === this.filter.type;
-                        }
-                        );
+                        this.gameSearch(this.game);
                         this.selected = 0;
                         this.opened = true;
                     } else {
-                        this.list = [];
                         this.opened = false;
                     }
                 }

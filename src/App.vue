@@ -56,7 +56,6 @@
 
         methods: {
             close() {
-                debug('send close');
                 this.$broadcast('hide::dropdown');
             },
         },

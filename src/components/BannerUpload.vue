@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import { changeBanner } from 'store/actions';
+    import { changeBanner } from 'store/users/actions';
 
     export default {
         vuex: {

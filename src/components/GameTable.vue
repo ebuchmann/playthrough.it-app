@@ -30,7 +30,8 @@
     export default {
         vuex: {
             getters: {
-                collections: state => state.collections,
+                selectedCollection: state => state.collections.collections.find(collection => collection._id === state.route.params.collection_id),
+                games: ({ gameList, route }) => gameList.gameLists.filter(game => game.collection_id === route.params.collection_id),
             },
             actions: {
 
@@ -41,19 +42,16 @@
             return {
                 orderBy: 'name',
                 direction: 1,
-                max: 100,
+                max: 50,
             };
         },
 
         computed: {
-            selectedCollection() {
-                return this.collections[[window.location.pathname.split('/')[2]]];
-            },
             selectedTracking() {
                 return this.selectedCollection.tracking;
             },
             firstFifty() {
-                return this.selectedCollection.gameList.slice(0, this.max);
+                return this.games.slice(0, this.max);
             },
         },
 

@@ -1,4 +1,4 @@
-import { pri } from './api';
+import { pri } from './api-config';
 
 export default {
     getUser() {

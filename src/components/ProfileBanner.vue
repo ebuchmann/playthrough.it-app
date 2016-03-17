@@ -1,7 +1,7 @@
 <template>
     <div class="profile-banner">
 
-        <img :src="banner" />
+        <img src="../assets/banner/1500x500.png" />
 
         <banner-upload v-if="uploading"></banner-upload>
         <button class="edit-button" @click="uploading = !uploading">Edit Banner</button>
@@ -15,7 +15,7 @@
     export default {
         vuex: {
             getters: {
-                banner: state => state.users.banner,
+                banner: ({ users }) => users.banner,
             },
             actions: {
 

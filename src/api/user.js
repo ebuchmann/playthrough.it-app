@@ -1,4 +1,4 @@
-import { pri } from './api';
+import { pri } from './api-config';
 
 export const currentUser = function () {
     return new Promise((resolve, reject) => {

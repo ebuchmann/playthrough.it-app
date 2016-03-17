@@ -3,7 +3,7 @@
 
         <profile-banner></profile-banner>
 
-        <div class="container">
+        <div class="container" v-if="!$loadingRouteData">
 
             <div class="status-bar" v-bind:style="{ width: percent + '%'}"></div>
 
@@ -20,9 +20,9 @@
                 </div>
                 <div class="col-6-last">
                     <p class="collection-status">
-                        Started on <strong>{{ selectedCollection.start_date | date }}</strong> <br />
+                        Started on <strong>{{ selectedCollection.created_at | date }}</strong> <br />
                         Collection is <span :class="collectionStatus ? '-green' : '-red'">{{ selectedCollection.status }}</span> and <span :class="collectionPrivate ? '-green' : '-red'">{{ selectedCollection.private }}</span><br />
-                        <strong>{{ completedCount }}</strong> of <strong>{{ gameCount }}</strong> games complete!<br />
+                        <strong>{{ selectedCollection.completed }}</strong> of <strong>{{ selectedCollection.games }}</strong> games complete!<br />
                         <span @click="this.editOpened = !this.editOpened">Edit collection</span><br />
                         <span @click="toggleProperty(selectedCollection.id, 'addGames')">Add Games</span>
                     </p>
@@ -43,18 +43,21 @@
     import EditCollection from 'component/EditCollection';
     import ProfileBanner from 'component/ProfileBanner';
 
-    import { setTitle, toggleProperty } from 'store/actions';
+    import { setTitle, toggleProperty, getCollection } from 'store/collections/actions';
+    import { getCollectionGames } from 'store/gamelist/actions';
 
     export default {
 
         vuex: {
             getters: {
-                selectedCollection: state => state.collections[state.route.params.collection_id],
-                collectionId: state => state.route.params.collection_id,
+                selectedCollection: ({ collections, route }) => collections.collections.find(collection => collection._id === route.params.collection_id),
+                collectionId: ({ route }) => route.params.collection_id,
             },
             actions: {
                 setTitle,
                 toggleProperty,
+                getCollection,
+                getCollectionGames,
             },
         },
 
@@ -82,14 +85,8 @@
             collectionPrivate() {
                 return this.selectedCollection.private === 'Public';
             },
-            gameCount() {
-                return this.selectedCollection.gameList.length;
-            },
-            completedCount() {
-                return this.selectedCollection.gameList.filter(game => game.status === 'Finished').length;
-            },
             percent() {
-                return Math.round(10 * (this.completedCount / this.gameCount * 100)) / 10 || 0;
+                return Math.round(10 * (this.selectedCollection.completed / this.selectedCollection.games * 100)) / 10 || 0;
             },
         },
 
@@ -104,6 +101,13 @@
             saveHeader() {
                 this.setTitle(this.$route.params.collection_id, document.getElementsByClassName('edit-title')[0].value);
                 this.header = false;
+            },
+        },
+
+        route: {
+            data() {
+                return this.getCollection(this.$route.params.collection_id)
+                    .then(() => this.getCollectionGames(this.$route.params.collection_id));
             },
         },
 

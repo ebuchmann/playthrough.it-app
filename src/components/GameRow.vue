@@ -4,9 +4,9 @@
             <td class="icon -{{ game.status | lowercase | stripSpaces }}">
                 <i class="fa"></i>
             </td>
-            <td>{{ game.name }}</td>
-            <td v-if="tracking.platform_id.active">{{ game.platform_id }}</td>
-            <td v-if="tracking.genres.active">{{ game.genres | genre }}</td>
+            <td>{{ game.game.title }}</td>
+            <td v-if="tracking.platform_id.active">{{ game.game.platform }}</td>
+            <td v-if="tracking.genres.active">{{ game.game.genres | genre }}</td>
             <td v-if="tracking.time.active">{{ game.time | time }}</td>
             <td v-if="tracking.date.active">{{ game.completed_on | date }}</td>
             <td v-if="tracking.rating.active">{{ game.rating }}</td>
@@ -15,7 +15,7 @@
         <tr class="edit-row">
             <td colspan="100%">
                 <div v-show="opened" transition="expand">
-                    <div style="padding: 10px">
+                    <div class="inner">
                         <label>Status</label>
                         <ul class="status-menu">
                             <li class="status-button -finished {{ game.status === 'Finished' ? 'selected' : ''}}" @click="changeStatus('Finished')"></li>
@@ -27,6 +27,13 @@
                         <label>Time</label>
                         <input v-model="time | time" @blur="updateTime" />
                         <label>Date</label>
+                        <i class="fa fa-times-circle" @click="doDelete"></i>
+
+                        <div class="is-deleting" v-show="isDeleting">
+                            Are you sure you want to delete this???
+                            <i class="fa fa-times-circle" @click="doDelete"></i>
+                            <button @click="isDeleting = false">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </td>
@@ -35,7 +42,8 @@
 </template>
 
 <script>
-    import { setStatus, setTime } from '../vuex/actions';
+    import { setTime } from 'store/collections/actions';
+    import { setStatus, removeGame } from 'store/gamelist/actions';
 
     export default {
         props: ['game', 'tracking'],
@@ -44,6 +52,7 @@
             return {
                 opened: false,
                 time: '',
+                isDeleting: false,
             };
         },
 
@@ -54,12 +63,13 @@
             actions: {
                 setStatus,
                 setTime,
+                removeGame,
             },
         },
 
         methods: {
             changeStatus(status) {
-                this.setStatus(this.$route.params.collection_id, this.game.id, status);
+                this.setStatus(this.game._id, status);
             },
 
             open() {
@@ -67,7 +77,15 @@
             },
 
             updateTime() {
-                this.setTime(this.game.id, this.time);
+                this.setTime(this.game._id, this.time);
+            },
+
+            doDelete() {
+                if (!this.isDeleting) this.isDeleting = !this.isDeleting;
+                else {
+                    const completed = this.game.status === 'Finished' ? -1 : 0;
+                    this.removeGame(this.game._id, this.$route.params.collection_id, completed);
+                }
             },
         },
     };
@@ -133,6 +151,11 @@
         > td {
             padding: 0;
         }
+
+        .inner {
+            padding: 10px;
+            position: relative;
+        }
     }
 
     .status-menu {
@@ -180,8 +203,15 @@
                 }
             }
         }
+    }
 
-
+    .is-deleting {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($red, .45);
+        top: 0;
+        left: 0;
     }
 
     /* always present */

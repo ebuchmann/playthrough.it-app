@@ -9,7 +9,7 @@
 
 <script>
     import { currentUser } from '../api/user';
-    import { setUser } from '../vuex/actions';
+    import { setUser } from 'store/users/actions';
 
     export default {
         data() {

@@ -11,21 +11,21 @@
                 <span>{{value.value}}</span>
             </label>
         </span>
-        
+
         <button @click="saveChanges">Save</button>
         <button @click="this.opened = !this.opened">Cancel</button>
     </div>
 </template>
 
 <script>
-    import { updateTracking } from 'store/actions';
+    import { updateTracking } from 'store/collections/actions';
 
     export default {
         props: ['opened'],
 
         vuex: {
             getters: {
-                collection: state => state.collections[state.route.params.collection_id],
+                collection: state => state.collections.collections.find(collection => collection._id === state.route.params.collection_id),
                 collectionId: state => state.route.params.collection_id,
             },
             actions: {

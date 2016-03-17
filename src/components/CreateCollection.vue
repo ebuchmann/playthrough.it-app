@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import { addCollection } from '../vuex/actions';
+    import { addCollection } from 'store/collections/actions';
 
     export default {
         data() {

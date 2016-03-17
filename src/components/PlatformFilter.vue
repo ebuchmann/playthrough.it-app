@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import { changeFilter } from '../vuex/actions';
+    import { changeFilter } from 'store/games/actions';
 
     export default {
         data() {

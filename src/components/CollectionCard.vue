@@ -1,5 +1,5 @@
 <template>
-    <a v-link="{ name: 'single_collection', params: { collection_id: collection.id} }">
+    <a v-link="{ name: 'single_collection', params: { collection_id: collection._id} }">
         <div class="collection-card">
             <div class="top">
                 <div class="left">
@@ -15,13 +15,13 @@
                         </div>
                     </div>
                     <p class="total">
-                        {{ completedCount }} of {{ gameCount }} games
+                        {{ collection.completed }} of {{ collection.games }} games
                     </p>
                 </div>
             </div>
             <div class="bottom">
                 <span class="playing">Currently<br /> playing:</span>
-                <span class="current">{{ inProgress.name || 'No game selected' }}</span>
+                <span class="current">{{ collection.current || 'No game selected' }}</span>
             </div>
         </div>
     </a>
@@ -40,16 +40,7 @@
 
         computed: {
             percent() {
-                return Math.round(10 * (this.completedCount / this.gameCount * 100)) / 10 || 0;
-            },
-            gameCount() {
-                return this.collection.gameList.length;
-            },
-            completedCount() {
-                return this.collection.gameList.filter(game => game.status === 'Finished').length;
-            },
-            inProgress() {
-                return this.collection.gameList.find(game => game.status === 'In Progress') || '';
+                return Math.round(10 * (this.collection.completed / this.collection.games * 100)) / 10 || 0;
             },
         },
 
