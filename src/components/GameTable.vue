@@ -1,23 +1,19 @@
 <template>
     <div class="game-list">
-
+        {{ orderBy }}
         <table class="game-table">
             <thead>
                 <tr>
                     <th @click="changeOrder('status')" :class="{sort: orderBy === 'status'}">
                         <span :class="direction > 0 ? 'asc' : 'desc'"></span>
                     </th>
-                    <th @click="changeOrder('name')" :class="{sort: orderBy === 'name'}">
-                        Name
-                        <span :class="direction > 0 ? 'asc' : 'desc'"></span>
-                    </th>
-                    <th v-for="(key, track) in selectedTracking" v-if="track.active" @click="changeOrder(key)" :class="{sort: orderBy === key}">
-                        {{{ track.value }}}
+                    <th v-for="value in possibleDisplay" v-if="collection.display[value]" @click="changeOrder(value)" :class="{sort: orderBy === value}">
+                        {{{ value | capitalize }}}
                         <span :class="direction > 0 ? 'asc' : 'desc'"></span>
                     </th>
                 </tr>
             </thead>
-            <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction" :game="game" :tracking="selectedTracking" transition="add-game"></tbody>
+            <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction" :game="game" :display="collection.display" transition="add-game"></tbody>
         </table>
         <span @click="showMore()">Show more...</span>
 
@@ -30,8 +26,8 @@
     export default {
         vuex: {
             getters: {
-                selectedCollection: state => state.collections.collections.find(collection => collection._id === state.route.params.collection_id),
-                games: ({ gameList, route }) => gameList.gameLists.filter(game => game.collection_id === route.params.collection_id),
+                collection: ({ collections, route }) => collections.collections.find(collection => collection._id === route.params.collectionId),
+                games: ({ items, route }) => items.items.filter(game => game.collectionId === route.params.collectionId),
             },
             actions: {
 
@@ -43,13 +39,11 @@
                 orderBy: 'name',
                 direction: 1,
                 max: 50,
+                possibleDisplay: ['name', 'platform', 'genres', 'time', 'date', 'rating', 'deaths'],
             };
         },
 
         computed: {
-            selectedTracking() {
-                return this.selectedCollection.tracking;
-            },
             firstFifty() {
                 return this.games.slice(0, this.max);
             },

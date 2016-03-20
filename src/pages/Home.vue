@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import hub from '../../api/githubtest';
+    import hub from 'api/githubtest';
 
     export default {
         data() {
@@ -41,7 +41,5 @@
 </script>
 
 <style>
-    .jumbotron {
-        height: 500px;
-    }
+
 </style>

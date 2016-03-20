@@ -25,4 +25,13 @@ export default {
         .then(res => res)
         .catch(err => err);
     },
+
+    // Updates a collection
+    updateCollection(id, attributes) {
+        return pub.patch(`collections/${id}`, {
+            attributes,
+        })
+        .then(res => res)
+        .catch(err => err);
+    },
 };

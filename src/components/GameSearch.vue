@@ -23,7 +23,7 @@
 
 <script>
     import { gameSearch } from 'store/games/actions';
-    import { addGame } from 'store/gamelist/actions';
+    import { addGame } from 'store/items/actions';
 
     export default {
         data() {
@@ -49,7 +49,7 @@
         methods: {
             addGame2() {
                 if (this.list.length) {
-                    this.addGame(this.$route.params.collection_id, this.list[this.selected]._id);
+                    this.addGame(this.$route.params.collectionId, this.list[this.selected]._id);
                 }
             },
 

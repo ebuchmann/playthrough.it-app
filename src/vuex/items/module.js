@@ -1,38 +1,38 @@
 import {
     GET_GAME_LIST,
-    SET_STATUS,
+    UPDATE_ITEM,
     ADD_GAME,
     REMOVE_GAME,
 } from '../mutation-types';
 // import Vue from 'vue';
 
 export const state = {
-    gameLists: [],
+    items: [],
 };
 
 export const mutations = {
     [GET_GAME_LIST](state, games) {
-        state.gameLists = games.slice();
+        state.items = games.slice();
     },
 
-    [SET_STATUS](state, listItem) {
+    [UPDATE_ITEM](state, listItem) {
         delete listItem.game;
-        const foundGame = state.gameLists.find(item => item._id === listItem._id);
+        const foundGame = state.items.find(item => item._id === listItem._id);
         for (const key in listItem) {
             if (listItem.hasOwnProperty(key)) {
-                state.gameLists[state.gameLists.indexOf(foundGame)][key] = listItem[key];
+                state.items[state.items.indexOf(foundGame)][key] = listItem[key];
             }
         }
     },
 
     [ADD_GAME](state, game) {
-        state.gameLists.push(game);
+        state.items.push(game);
     },
 
     [REMOVE_GAME](state, gameId) {
-        const foundGame = state.gameLists.find(game => game._id === gameId);
+        const foundGame = state.items.find(game => game._id === gameId);
         if (foundGame) {
-            state.gameLists.splice(state.gameLists.indexOf(foundGame), 1);
+            state.items.splice(state.items.indexOf(foundGame), 1);
         }
     },
 };

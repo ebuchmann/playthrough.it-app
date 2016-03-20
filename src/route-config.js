@@ -1,9 +1,9 @@
 // Page Components
-import Home from './components/pages/Home';
-import PublicCollections from './components/pages/PublicCollections';
-import CollectionSingle from './components/pages/CollectionSingle';
-import Profile from './components/pages/Profile';
-import NotFound from './components/pages/NotFound';
+import Home from 'page/Home';
+import PublicCollections from 'page/PublicCollections';
+import CollectionSingle from 'page/CollectionSingle';
+import Profile from 'page/Profile';
+import NotFound from 'page/NotFound';
 
 export function configRouter(router) {
     router.map({
@@ -15,7 +15,7 @@ export function configRouter(router) {
             name: 'collections',
             component: PublicCollections,
         },
-        '/collection/:collection_id': {
+        '/collection/:collectionId': {
             name: 'single_collection',
             component: CollectionSingle,
         },

@@ -1,5 +1,5 @@
 <template>
-    <a v-link="{ name: 'single_collection', params: { collection_id: collection._id} }">
+    <a v-link="{ name: 'single_collection', params: { collectionId: collection._id} }">
         <div class="collection-card">
             <div class="top">
                 <div class="left">

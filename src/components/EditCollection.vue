@@ -12,24 +12,28 @@
             </label>
         </span>
 
+        <span @click="saveChanges('active', !collection.active)">{{ collection.active }}</span><br />
+        <span @click="saveChanges('public', !collection.public)">{{ collection.public }}</span><br />
+        <span @click="saveChanges('suggestions', !collection.suggestions)">{{ collection.suggestions }}</span>
+
         <button @click="saveChanges">Save</button>
         <button @click="this.opened = !this.opened">Cancel</button>
     </div>
 </template>
 
 <script>
-    import { updateTracking } from 'store/collections/actions';
+    import { updateCollection } from 'store/collections/actions';
 
     export default {
         props: ['opened'],
 
         vuex: {
             getters: {
-                collection: state => state.collections.collections.find(collection => collection._id === state.route.params.collection_id),
-                collectionId: state => state.route.params.collection_id,
+                collection: ({ collections, route }) => collections.collections.find(collection => collection._id === route.params.collectionId),
+                collectionId: ({ route }) => route.params.collectionId,
             },
             actions: {
-                updateTracking,
+                updateCollection,
             },
         },
 
@@ -53,9 +57,8 @@
                 } else this.changes.push(this.tracking[key]);
             },
 
-            saveChanges() {
-                this.updateTracking(this.changes);
-                this.opened = false;
+            saveChanges(property, value) {
+                this.updateCollection(this.collectionId, { [property]: value });
             },
         },
     };

@@ -17,6 +17,7 @@ module.exports = {
             component: path.resolve(__dirname, '../src/components'),
             store: path.resolve(__dirname, '../src/vuex'),
             api: path.resolve(__dirname, '../src/api'),
+            page: path.resolve(__dirname, '../src/pages'),
         },
     },
     resolveLoader: {

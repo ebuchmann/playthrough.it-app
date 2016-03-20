@@ -1,13 +1,10 @@
 import {
     ADD_COLLECTION,
-    SET_TITLE,
-    TOGGLE_PROPERTY,
-    UPDATE_TRACKING,
+    UPDATE_COLLECTION,
     GET_ALL_COLLECTIONS,
     GET_COLLECTION,
     GET_COLLECTION_GAMES,
     CHANGE_GAME_COUNT,
-    UPDATE_COLLECTION,
 } from '../mutation-types';
 
 export const state = {
@@ -17,20 +14,6 @@ export const state = {
 export const mutations = {
     [ADD_COLLECTION](state, collection) {
         state.collections.push(collection);
-    },
-
-    [SET_TITLE](state, collectionId, newTitle) {
-        state[collectionId].title = newTitle;
-    },
-
-    [TOGGLE_PROPERTY](state, collectionId, property) {
-        state[collectionId][property] = !state[collectionId][property];
-    },
-
-    [UPDATE_TRACKING](state, changes) {
-        changes.forEach(change => {
-            change.active = !change.active;
-        });
     },
 
     [GET_ALL_COLLECTIONS](state, collections) {
@@ -48,7 +31,7 @@ export const mutations = {
     [GET_COLLECTION_GAMES](state, games, collectionId) {
         const match = state.collections.find(collection => collection._id === collectionId);
         if (match) {
-            match.gameList = games;
+            match.item = games;
         }
     },
 

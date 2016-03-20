@@ -24,16 +24,8 @@ export const getCollection = ({ dispatch }, collectionId) => new Promise(resolve
     });
 });
 
-export const setTitle = ({ dispatch }, collectionId, newTitle) => {
-    if (newTitle) {
-        dispatch(types.SET_TITLE, collectionId, newTitle);
-    }
-};
-
-export const toggleProperty = ({ dispatch }, collectionId, property) => {
-    dispatch(types.TOGGLE_PROPERTY, collectionId, property);
-};
-
-export const updateTracking = ({ dispatch }, changes) => {
-    dispatch(types.UPDATE_TRACKING, changes);
+export const updateCollection = ({ dispatch }, collectionId, property) => {
+    collections.updateCollection(collectionId, property).then(res => {
+        dispatch(types.UPDATE_COLLECTION, res.data.attributes.collection);
+    });
 };

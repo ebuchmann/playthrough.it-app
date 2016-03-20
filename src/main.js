@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import { configRouter } from './route-config';
 import App from './App';
+import numeral from 'numeraljs';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -31,15 +32,11 @@ Vue.filter('stripSpaces', value => value.replace(/ /g, ''));
 
 Vue.filter('time', {
     read(value) {
-        if (value) {
-            const newValue = new Date(value);
-            return `${newValue.getHours()}:${newValue.getMinutes()}:${newValue.getSeconds()}`;
-        }
+        if (value) return numeral(value).format('00:00:00');
         return null;
     },
     write(value) {
-        const time = value.split(':');
-        return new Date(0, 0, 0, time[0], time[1], time[2]);
+        return numeral(value).format('0');
     },
 });
 

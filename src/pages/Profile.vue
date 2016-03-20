@@ -22,9 +22,9 @@
 </template>
 
 <script>
-    import ProfileBanner from '../ProfileBanner';
-    import CollectionCard from '../CollectionCard';
-    import CreateCollection from '../CreateCollection';
+    import ProfileBanner from 'component/ProfileBanner';
+    import CollectionCard from 'component/CollectionCard';
+    import CreateCollection from 'component/CreateCollection';
 
     import { getAllCollections } from 'store/collections/actions';
 
@@ -64,7 +64,7 @@
 </script>
 
 <style lang="sass">
-    @import '../../css/includes';
+    @import '../css/includes';
 
     .collection-count {
         float: right;

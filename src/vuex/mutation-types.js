@@ -9,16 +9,13 @@ export const CHANGE_BANNER = 'CHANGE_BANNER';
 
 // Collections Module
 export const ADD_COLLECTION = 'ADD_COLLECTION';
-export const SET_TITLE = 'SET_TITLE';
-export const TOGGLE_PROPERTY = 'TOGGLE_PROPERTY';
-export const UPDATE_TRACKING = 'UPDATE_TRACKING';
 export const GET_ALL_COLLECTIONS = 'GET_ALL_COLLECTIONS';
 export const GET_COLLECTION = 'GET_COLLECTION';
 export const CHANGE_GAME_COUNT = 'CHANGE_GAME_COUNT';
 export const UPDATE_COLLECTION = 'UPDATE_COLLECTION';
 
-// GameList Module
+// item Module
 export const GET_GAME_LIST = 'GET_GAME_LIST';
-export const SET_STATUS = 'SET_STATUS';
 export const ADD_GAME = 'ADD_GAME';
 export const REMOVE_GAME = 'REMOVE_GAME';
+export const UPDATE_ITEM = 'UPDATE_ITEM';

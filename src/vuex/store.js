@@ -5,7 +5,7 @@ import createLogger from 'vuex/logger';
 import users from 'store/users/module';
 import games from 'store/games/module';
 import collections from 'store/collections/module';
-import gameList from 'store/gamelist/module';
+import items from 'store/items/module';
 
 Vue.use(Vuex);
 Vue.config.debug = true;
@@ -17,7 +17,7 @@ export default new Vuex.Store({
         users,
         games,
         collections,
-        gameList,
+        items,
     },
     strict: debug,
     middlewares: [createLogger()],
