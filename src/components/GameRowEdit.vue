@@ -45,8 +45,8 @@
                     <i class="fa fa-times-circle dodelete" @click="doDelete"></i>
 
                     <div class="is-deleting" v-show="isDeleting">
-                        Are you sure you want to delete this?
-                        <button @click="isDeleting = false">Cancel</button>
+                        Are you sure you want to delete this?<br />
+                        <span @click="doDelete">Yes, delete this</span> | <span @click="isDeleting = false">No, don't delete this</span>
                     </div>
                 </div>
             </div>
@@ -200,24 +200,33 @@
         position: absolute;
         top: 20px;
         right: 20px;
-        z-index: 100;
+        z-index: 90;
         color: $red;
         font-size: 1.5rem;
         cursor: pointer;
     }
 
     .is-deleting {
-        z-index: 90;
+        z-index: 100;
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba($red, .65);
+        background-color: rgba($red, .9);
         top: 0;
         left: 0;
         font-size: 2rem;
         color: #fff;
         text-align: center;
-        padding: 40px;
+        padding: 20px;
+
+        > span {
+            font-size: 1.5rem;
+            cursor: pointer;
+
+            &:hover {
+                color: $blue;
+            }
+        }
     }
 
     /* always present */

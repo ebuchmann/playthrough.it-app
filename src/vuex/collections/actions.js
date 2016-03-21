@@ -1,18 +1,27 @@
 import * as types from 'store/mutation-types';
-import collections from 'api/collection';
+import collections from 'api/collections';
 
-export const addCollection = ({ dispatch }, title) => {
+export const addCollection = ({ dispatch }, title) => new Promise((resolve, reject) => {
     if (title) {
         collections.createCollection(title).then(res => {
-            dispatch(types.ADD_COLLECTION, res.data.attributes);
+            if (res.status === 201) {
+                dispatch(types.ADD_COLLECTION, res.data.attributes);
+                resolve();
+            } else {
+                reject(res.data);
+            }
         });
-        return true;
     }
-    return false;
-};
+});
 
 export const getAllCollections = ({ dispatch }) => {
     collections.getCollections().then(res => {
+        dispatch(types.GET_ALL_COLLECTIONS, res.data.attributes);
+    });
+};
+
+export const getUsersCollections = ({ dispatch }, userId) => {
+    collections.getUsersCollections(userId).then(res => {
         dispatch(types.GET_ALL_COLLECTIONS, res.data.attributes);
     });
 };
@@ -24,8 +33,9 @@ export const getCollection = ({ dispatch }, collectionId) => new Promise(resolve
     });
 });
 
-export const updateCollection = ({ dispatch }, collectionId, property) => {
+export const updateCollection = ({ dispatch }, collectionId, property) => new Promise(resolve => {
     collections.updateCollection(collectionId, property).then(res => {
         dispatch(types.UPDATE_COLLECTION, res.data.attributes.collection);
+        resolve();
     });
-};
+});

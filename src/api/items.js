@@ -7,10 +7,9 @@ export default {
         return pub.post(`collections/${collectionId}/games/${gameId}`);
     },
 
-    // Get a collections item
-    // TODO: swap the api to call items instead of collection
+    // Get a collections items
     getCollectionGames(id) {
-        return pub.get(`collections/${id}/games`)
+        return pub.get(`items/collection/${id}`)
         .then(res => res)
         .catch(err => err);
     },

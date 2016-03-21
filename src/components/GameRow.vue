@@ -12,7 +12,7 @@
             <td v-if="display.rating">{{ game.rating }}</td>
             <td v-if="display.deaths">{{ game.deaths }}</td>
         </tr>
-        <tr is="game-row-edit" :game="game" :opened="opened"></tr>
+        <tr v-if="currentUser._id === user_id" is="game-row-edit" :game="game" :opened="opened"></tr>
     </tbody>
 </template>
 
@@ -20,7 +20,13 @@
     import GameRowEdit from 'component/GameRowEdit';
 
     export default {
-        props: ['game', 'display'],
+        props: ['game', 'display', 'user_id'],
+
+        vuex: {
+            getters: {
+                currentUser: ({ users }) => users.currentUser,
+            },
+        },
 
         components: {
             GameRowEdit,

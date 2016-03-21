@@ -1,9 +1,9 @@
-import { pub } from './api-config';
+import { pub, pri } from './api-config';
 
 export default {
     // Create new collection
     createCollection(title) {
-        return pub.post('collections', {
+        return pri.post('collections', {
             attributes: {
                 title,
             },
@@ -15,6 +15,13 @@ export default {
     // Get all collections
     getCollections() {
         return pub.get('collections')
+        .then(res => res)
+        .catch(err => err);
+    },
+
+    // Get collections for a specific user
+    getUsersCollections(userId) {
+        return pub.get(`collections/user/${userId}`)
         .then(res => res)
         .catch(err => err);
     },

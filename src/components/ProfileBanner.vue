@@ -1,7 +1,7 @@
 <template>
     <div class="profile-banner">
 
-        <img src="../assets/banner/1500x500.png" />
+        <img :src="banner" />
 
         <banner-upload v-if="uploading"></banner-upload>
         <button class="edit-button" @click="uploading = !uploading">Edit Banner</button>
@@ -13,14 +13,7 @@
     import BannerUpload from 'component/BannerUpload';
 
     export default {
-        vuex: {
-            getters: {
-                banner: ({ users }) => users.banner,
-            },
-            actions: {
-
-            },
-        },
+        props: ['banner'],
 
         data() {
             return {

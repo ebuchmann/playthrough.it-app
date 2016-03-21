@@ -6,6 +6,7 @@ import users from 'store/users/module';
 import games from 'store/games/module';
 import collections from 'store/collections/module';
 import items from 'store/items/module';
+import suggestions from 'store/suggestions/module';
 
 Vue.use(Vuex);
 Vue.config.debug = true;
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         games,
         collections,
         items,
+        suggestions,
     },
     strict: debug,
     middlewares: [createLogger()],

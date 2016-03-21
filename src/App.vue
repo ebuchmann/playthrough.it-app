@@ -1,8 +1,8 @@
 <template>
     <div class="vue-app" @click="close">
-<!--
+
         <login-modal></login-modal>
--->
+
         <div class="top-nav-wrapper">
             <div class="container">
                 <nav class="top-nav">
@@ -13,14 +13,15 @@
                     <div class="top-links">
                         <a v-link="{ name: 'home' }">Home</a>
                         <a v-link="{ name: 'collections' }">Collections</a>
-                        <click-menu class="user-link">
-                            <span slot="menu" class="button"> {{ username }}</span>
+                        <click-menu v-if="currentUser" class="user-link">
+                            <span slot="menu" class="button"> {{ currentUser.username }}</span>
                             <div slot="content" class="top-menu-dropdown">
                                 <a v-link="{ name: 'collections' }">Collections</a>
                                 <a v-link="{ name: 'profile' }">Profile</a>
-                                <a href="#">Logout</a>
+                                <a href="#" @click="doLogout()">Logout</a>
                             </div>
                         </click-menu>
+                        <a v-else @click="$broadcast('toggle::login-modal')">Login</a>
                     </ul>
                 </nav>
             </div>
@@ -39,29 +40,33 @@
     import store from 'store/store';
     import LoginModal from 'component/LoginModal';
     import ClickMenu from 'component/ClickMenu';
+    import { logout } from 'store/users/actions';
 
     export default {
         store,
+
+        vuex: {
+            getters: {
+                currentUser: ({ users }) => users.currentUser,
+            },
+            actions: {
+                logout,
+            },
+        },
 
         components: {
             LoginModal,
             ClickMenu,
         },
 
-        computed: {
-            username() {
-                return 'ebuchmann';
-            },
-        },
-
         methods: {
             close() {
                 this.$broadcast('hide::dropdown');
             },
-        },
-
-        ready() {
-            this.$broadcast('login::check-user');
+            doLogout() {
+                this.logout();
+                this.$router.go({ name: 'home' });
+            },
         },
     };
 </script>

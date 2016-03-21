@@ -1,6 +1,6 @@
 <template>
     <div class="game-list">
-        {{ orderBy }}
+
         <table class="game-table">
             <thead>
                 <tr>
@@ -13,7 +13,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction" :game="game" :display="collection.display" transition="add-game"></tbody>
+            <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction" :game="game" :display="collection.display" :user_id="collection.user._id" transition="add-game"></tbody>
         </table>
         <span @click="showMore()">Show more...</span>
 

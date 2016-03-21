@@ -3,8 +3,6 @@
 
         <div class="container">
             <div class="left">
-                {{ user | json }}
-                <button @click="test">Test</button>
                 Left
             </div>
             <div class="right">
@@ -16,27 +14,8 @@
 </template>
 
 <script>
-    import hub from 'api/githubtest';
-
     export default {
-        data() {
-            return {
-                user: 'before',
-            };
-        },
 
-        methods: {
-            test() {
-                hub.getUser()
-                    .then(res => {
-                        this.user = res;
-                    });
-            },
-        },
-
-        components: {
-
-        },
     };
 </script>
 

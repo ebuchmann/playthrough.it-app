@@ -5,10 +5,10 @@
 
         <p>Things I'd like to track...</p>
 
-        <span class="button-checkbox" v-for="(key, value) in tracking">
+        <span class="button-checkbox" v-for="(key, value) in possibleDisplay">
             <label>
-                <input type="checkbox" @click="changeTracking(key)" checked="{{value.active}}" hidden />
-                <span>{{value.value}}</span>
+                <input type="checkbox" @click="saveChanges(`display.${value}`, !collection.display[value])" checked="{{ collection.display[value] }}" hidden />
+                <span>{{ value }}</span>
             </label>
         </span>
 
@@ -40,12 +40,13 @@
         data() {
             return {
                 changes: [],
+                possibleDisplay: ['platform', 'genres', 'time', 'date', 'rating', 'deaths'],
             };
         },
 
         computed: {
             tracking() {
-                return this.collection.tracking;
+                return this.collection.display;
             },
         },
 

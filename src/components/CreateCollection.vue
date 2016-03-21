@@ -40,10 +40,12 @@
             },
 
             saveCollection() {
-                if (this.addCollection(this.name)) {
+                this.addCollection(this.name).then(() => {
                     this.name = '';
                     this.opened = false;
-                }
+                }).catch(err => {
+                    debug(err);
+                });
             },
 
             cancelCollection() {

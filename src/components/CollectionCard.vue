@@ -4,7 +4,7 @@
             <div class="top">
                 <div class="left">
                     <h2 class="title">{{ collection.title }}</h2>
-                    <p class="owner">by {{ collection.owner }}</p>
+                    <p class="owner">by {{ collection.user.username }}</p>
                 </div>
                 <div class="right">
                     <div class="c100 center p{{parseInt(percent)}} ">
@@ -29,22 +29,13 @@
 
 <script>
     export default {
-        vuex: {
-            getters: {
-
-            },
-            actions: {
-
-            },
-        },
+        props: ['collection'],
 
         computed: {
             percent() {
                 return Math.round(10 * (this.collection.completed / this.collection.games * 100)) / 10 || 0;
             },
         },
-
-        props: ['collection'],
     };
 </script>
 
@@ -73,6 +64,7 @@
 
                 > .title {
                     color: $dark;
+                    word-wrap: break-word;
                 }
 
                 > .owner {

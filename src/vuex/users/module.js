@@ -1,24 +1,23 @@
 import {
-    SET_USER,
+    SET_CURRENT_USER,
     LOG_OUT,
     CHANGE_BANNER,
 } from '../mutation-types';
 
 export const state = {
-    loggedIn: false,
-    username: false,
-    maxCollections: 5,
+    maxCollections: 6,
     banner: '/1500x500.png',
+    currentUser: false,
 };
 
 export const mutations = {
 
-    [SET_USER](username) {
-        this.state.username = username;
+    [SET_CURRENT_USER](state, user) {
+        state.currentUser = user;
     },
 
-    [LOG_OUT]() {
-        this.state.username = false;
+    [LOG_OUT](state) {
+        state.currentUser = false;
     },
 
     [CHANGE_BANNER](state, newBanner) {

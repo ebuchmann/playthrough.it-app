@@ -3,7 +3,6 @@ import {
     UPDATE_COLLECTION,
     GET_ALL_COLLECTIONS,
     GET_COLLECTION,
-    GET_COLLECTION_GAMES,
     CHANGE_GAME_COUNT,
 } from '../mutation-types';
 
@@ -28,13 +27,6 @@ export const mutations = {
         state.collections.push(newCollection);
     },
 
-    [GET_COLLECTION_GAMES](state, games, collectionId) {
-        const match = state.collections.find(collection => collection._id === collectionId);
-        if (match) {
-            match.item = games;
-        }
-    },
-
     [CHANGE_GAME_COUNT](state, collectionId, change, finished) {
         const collection = state.collections.find(collection => collection._id === collectionId);
         collection.games = collection.games + change;
@@ -42,6 +34,7 @@ export const mutations = {
     },
 
     [UPDATE_COLLECTION](state, collection) {
+        delete collection.user;
         const foundCollection = state.collections.find(col => col._id === collection._id);
         if (foundCollection) {
             const index = state.collections.indexOf(foundCollection);

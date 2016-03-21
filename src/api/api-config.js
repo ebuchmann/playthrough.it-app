@@ -4,6 +4,21 @@ export const pub = axios.create({
     baseURL: 'http://localhost:3033/',
 });
 export const pri = axios.create({
-    baseURL: 'https://api.github.com/',
-    // withCredentials: true
+    baseURL: 'http://localhost:3033/',
+    withCredentials: true,
+});
+
+pub.interceptors.request.use(config => {
+    debug('success');
+    return config;
+}, error => {
+    debug(error);
+});
+
+pri.interceptors.response.use(config => {
+    debug('success');
+    return config;
+}, error => {
+    debug('error');
+    return error;
 });

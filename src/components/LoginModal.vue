@@ -8,8 +8,7 @@
 </template>
 
 <script>
-    import { currentUser } from '../api/user';
-    import { setUser } from 'store/users/actions';
+    import { getCurrentUser } from 'store/users/actions';
 
     export default {
         data() {
@@ -19,11 +18,11 @@
         },
 
         vuex: {
-            state: {
+            getters: {
 
             },
             actions: {
-                setUser,
+                getCurrentUser,
             },
         },
 
@@ -39,28 +38,16 @@
                     if (popup.closed) {
                         window.clearInterval(this._oauthInterval);
 
-                        this.fetchUsername();
+                        this.getCurrentUser();
                         this.toggle();
                     }
                 }, 200);
-            },
-
-            fetchUsername() {
-                currentUser().then(res => {
-                    setUser(res);
-                }).catch(err => {
-                    debug(err);
-                });
             },
         },
 
         events: {
             'toggle::login-modal'() {
                 this.toggle();
-            },
-
-            'login::check-user'() {
-                this.fetchUsername();
             },
         },
     };
@@ -79,6 +66,7 @@
         border: 1px solid black;
         transform: translateY(-100%);
         transition: transform .15s ease-out;
+        background: #fff;
 
         &.active {
             transform: translateY(0);

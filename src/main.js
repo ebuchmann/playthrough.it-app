@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import { configRouter } from './route-config';
 import App from './App';
 import numeral from 'numeraljs';
+import { getCurrentUser } from 'store/users/actions';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -46,3 +47,4 @@ import store from 'store/store';
 sync(store, router);
 
 router.start(App, '#app');
+getCurrentUser(store);

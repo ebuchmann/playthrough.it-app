@@ -1,7 +1,7 @@
 <template>
     <div class="collection-single">
 
-        <profile-banner></profile-banner>
+        <profile-banner :banner="collection.user.banner"></profile-banner>
 
         <div class="container" v-if="!$loadingRouteData">
 
@@ -24,14 +24,22 @@
                         Collection is <span :class="collection.active ? '-green' : '-red'">{{ activeText }}</span> and <span :class="collection.public ? '-green' : '-red'">{{ publicText }}</span><br />
                         You are <span :class="collection.suggestions ? '-green' : '-red'">{{ suggestionText }}</span> for suggestions on games<br />
                         <strong>{{ collection.completed }}</strong> of <strong>{{ collection.games }}</strong> games complete!<br />
-                        <span @click="this.editOpened = !this.editOpened">Edit collection</span><br />
-                        <span @click="this.gameAddOpened = !this.gameAddOpened">Add Games</span>
+                        <template v-if="currentUser._id === collection.user._id">
+                            <span @click="this.editOpened = !this.editOpened">Edit collection</span><br />
+                            <span @click="this.gameAddOpened = !this.gameAddOpened">Add Games</span>
+                        </template>
                     </p>
                 </div>
             </div>
 
-            <edit-collection v-if="editOpened" :opened.sync="editOpened"></edit-collection>
-            <game-list-add v-if="gameAddOpened"></game-list-add>
+            <game-suggestion v-if="currentUser && currentUser._id !== collection.user._id" :user_id="collection.user._id"></game-suggestion>
+
+            <suggested-games v-for="suggestion in suggestions" :suggestion="suggestion"></suggested-games>
+
+            <template v-if="currentUser._id === collection.user._id">
+                <edit-collection v-if="editOpened" :opened.sync="editOpened"></edit-collection>
+                <item-add v-if="gameAddOpened"></item-add>
+            </template>
             <game-table></game-table>
         </div>
 
@@ -40,31 +48,39 @@
 
 <script>
     import GameTable from 'component/GameTable';
-    import itemAdd from 'component/itemAdd';
+    import ItemAdd from 'component/ItemAdd';
     import EditCollection from 'component/EditCollection';
     import ProfileBanner from 'component/ProfileBanner';
+    import GameSuggestion from 'component/GameSuggestion';
+    import SuggestedGames from 'component/SuggestedGames';
 
-    import { getCollection } from 'store/collections/actions';
+    import { getCollection, updateCollection } from 'store/collections/actions';
     import { getCollectionGames } from 'store/items/actions';
+    import { getSuggestions } from 'store/suggestions/actions';
 
     export default {
-
         vuex: {
             getters: {
                 collection: ({ collections, route }) => collections.collections.find(collection => collection._id === route.params.collectionId),
                 collectionId: ({ route }) => route.params.collectionId,
+                currentUser: ({ users }) => users.currentUser,
+                suggestions: ({ suggestions }) => suggestions.newSuggestions,
             },
             actions: {
                 getCollection,
                 getCollectionGames,
+                updateCollection,
+                getSuggestions,
             },
         },
 
         components: {
             GameTable,
-            itemAdd,
+            ItemAdd,
             ProfileBanner,
             EditCollection,
+            GameSuggestion,
+            SuggestedGames,
         },
 
         data() {
@@ -102,8 +118,9 @@
             },
 
             saveHeader() {
-                // this.setTitle(this.collectionId, document.getElementsByClassName('edit-title')[0].value);
-                this.header = false;
+                this.updateCollection(this.collectionId, { title: document.getElementsByClassName('edit-title')[0].value }).then(() => {
+                    this.header = false;
+                });
             },
         },
 
@@ -112,6 +129,7 @@
                 return Promise.all([
                     this.getCollection(this.collectionId),
                     this.getCollectionGames(this.collectionId),
+                    this.getSuggestions(this.collectionId),
                 ]);
             },
         },
@@ -126,6 +144,7 @@
 
         .title {
             position: relative;
+            word-wrap: break-word;
 
             &:hover {
                 cursor: pointer;
@@ -138,6 +157,7 @@
                 outline: none;
                 font-weight: bold;
                 padding: 0;
+                width: 100%;
             }
         }
     }

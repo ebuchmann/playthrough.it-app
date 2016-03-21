@@ -1,10 +1,10 @@
 <template>
     <div class="user-profile">
 
-        <profile-banner></profile-banner>
+        <profile-banner :banner="currentUser.banner"></profile-banner>
 
         <div class="container">
-            <span class="collection-count">{{ collectionCount }} of {{ maxCollections }} collections</span>
+            <span class="collection-count">{{ collections.length }} of {{ currentUser.maxCollections }} collections</span>
 
             <div class="row">
                 <template v-for="collection in collections">
@@ -12,7 +12,7 @@
                         <collection-card :collection="collection"></collection-card>
                     </div>
                 </template>
-                <div v-if="collectionCount < maxCollections" class="col-3">
+                <div v-if="currentUser && collections.length < currentUser.maxCollections" class="col-3">
                     <create-collection></create-collection>
                 </div>
             </div>
@@ -26,28 +26,22 @@
     import CollectionCard from 'component/CollectionCard';
     import CreateCollection from 'component/CreateCollection';
 
-    import { getAllCollections } from 'store/collections/actions';
+    import { getUsersCollections } from 'store/collections/actions';
 
     export default {
         vuex: {
             getters: {
-                collections: state => state.collections.collections,
-                maxCollections: state => state.users.maxCollections,
-                // collectionCount: state => state.collections.length,
+                collections: ({ collections }) => collections.collections,
+                currentUser: ({ users }) => users.currentUser,
+                userId: ({ route }) => route.params.userId,
             },
             actions: {
-                getAllCollections,
+                getUsersCollections,
             },
         },
 
         methods: {
 
-        },
-
-        computed: {
-            collectionCount() {
-                return Object.keys(this.collections).length;
-            },
         },
 
         components: {
@@ -56,9 +50,10 @@
             CreateCollection,
         },
 
-        ready() {
-            debug('start');
-            this.getAllCollections();
+        route: {
+            data() {
+                return this.getUsersCollections(this.userId || this.currentUser._id);
+            },
         },
     };
 </script>

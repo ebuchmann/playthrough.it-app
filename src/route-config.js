@@ -23,8 +23,20 @@ export function configRouter(router) {
             name: 'profile',
             component: Profile,
         },
+        '/profile/:userId': {
+            name: 'user_profile',
+            component: Profile,
+        },
         '*': {
             component: NotFound,
         },
     });
+
+    // router.beforeEach(({ to, abort, next }) => {
+    //     debug(to);
+    //     if (to.name === 'collections') {
+    //         abort();
+    //     }
+    //     next();
+    // });
 }
