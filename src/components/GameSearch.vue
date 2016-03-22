@@ -1,7 +1,7 @@
 <template>
     <span class="game-search">
 
-        <input v-model="game"
+        <input v-model="text"
             @click="open"
             @keyup.down="moveSelected(1)"
             @keyup.up="moveSelected(-1)"
@@ -26,9 +26,11 @@
     import { addGame } from 'store/items/actions';
 
     export default {
+        props: ['game'],
+
         data() {
             return {
-                game: '',
+                text: '',
                 selected: 0,
                 opened: false,
             };
@@ -49,14 +51,18 @@
         methods: {
             addGame2() {
                 if (this.list.length) {
-                    this.addGame(this.$route.params.collectionId, this.list[this.selected]._id);
+                    this.game = this.list[this.selected];
+                    this.text = '';
                 }
+                // if (this.list.length) {
+                //     this.addGame(this.$route.params.collectionId, this.list[this.selected]._id);
+                // }
             },
 
             doSearch(event) {
                 if (event.keyCode > 40 || event.keyCode < 37 && event.keyCode !== 13) {
-                    if (this.game.length > 0) {
-                        this.gameSearch(this.game);
+                    if (this.text.length > 0) {
+                        this.gameSearch(this.text);
                         this.selected = 0;
                         this.opened = true;
                     } else {

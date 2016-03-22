@@ -1,9 +1,9 @@
 <template>
-    <div class="collection-single">
+    <div class="collection-single" v-if="!$loadingRouteData">
 
         <profile-banner :banner="collection.user.banner"></profile-banner>
 
-        <div class="container" v-if="!$loadingRouteData">
+        <div class="container">
 
             <div class="status-bar" v-bind:style="{ width: percent + '%'}"></div>
 
@@ -32,11 +32,10 @@
                 </div>
             </div>
 
-            <game-suggestion v-if="currentUser && currentUser._id !== collection.user._id" :user_id="collection.user._id"></game-suggestion>
-
-            <suggested-games v-for="suggestion in suggestions" :suggestion="suggestion"></suggested-games>
+            <game-suggestion v-if="currentUser && currentUser._id !== collection.user._id" :collection="collection"></game-suggestion>
 
             <template v-if="currentUser._id === collection.user._id">
+                <suggested-games v-for="suggestion in suggestions" :suggestion="suggestion"></suggested-games>
                 <edit-collection v-if="editOpened" :opened.sync="editOpened"></edit-collection>
                 <item-add v-if="gameAddOpened"></item-add>
             </template>
@@ -126,6 +125,7 @@
 
         route: {
             data() {
+                debug('data');
                 return Promise.all([
                     this.getCollection(this.collectionId),
                     this.getCollectionGames(this.collectionId),

@@ -46,5 +46,6 @@ import { sync } from 'vuex-router-sync';
 import store from 'store/store';
 sync(store, router);
 
-router.start(App, '#app');
-getCurrentUser(store);
+getCurrentUser(store).then(() => {
+    router.start(App, '#app');
+});

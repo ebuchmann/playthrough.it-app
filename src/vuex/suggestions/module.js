@@ -8,7 +8,7 @@ export const state = {
 
 export const mutations = {
     [GET_SUGGESTIONS](state, suggestions) {
-        state.newSuggestions.push(suggestions);
+        state.newSuggestions = suggestions;
     },
 };
 

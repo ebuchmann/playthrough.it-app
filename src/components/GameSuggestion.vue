@@ -1,15 +1,18 @@
 <template>
     <div class="game-suggestion">
-        Suggest...
+        Suggest... {{ suggestedGame.title }}
         <button @click="suggest">Suggest TMP</button>
+        <game-search :game.sync="suggestedGame"></game-search>
+        {{ suggestedGame | json }}
     </div>
 </template>
 
 <script>
     import { suggestGame } from 'store/suggestions/actions';
+    import GameSearch from 'component/GameSearch';
 
     export default {
-        props: ['user_id'],
+        props: ['collection'],
 
         vuex: {
             getters: {
@@ -20,9 +23,25 @@
             },
         },
 
+        data() {
+            return {
+                suggestedGame: '',
+            };
+        },
+
+        components: {
+            GameSearch,
+        },
+
         methods: {
             suggest() {
-                this.suggestGame(this.user_id, '56e49d24c136a5f08b73662e');
+                if (this.suggestedGame) {
+                    this.suggestGame({
+                        suggestedTo: this.collection.user._id,
+                        game: this.suggestedGame._id,
+                        collection: this.collection._id,
+                    });
+                }
             },
         },
     };

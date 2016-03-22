@@ -8,17 +8,17 @@ export const pri = axios.create({
     withCredentials: true,
 });
 
-pub.interceptors.request.use(config => {
-    debug('success');
-    return config;
-}, error => {
-    debug(error);
-});
-
-pri.interceptors.response.use(config => {
-    debug('success');
-    return config;
-}, error => {
-    debug('error');
-    return error;
-});
+// pub.interceptors.request.use(config => {
+//     debug(config);
+//     return config;
+// }, error => {
+//     debug(error);
+// });
+//
+// pri.interceptors.response.use(config => {
+//     debug('success');
+//     return config;
+// }, error => {
+//     debug('error');
+//     return error;
+// });

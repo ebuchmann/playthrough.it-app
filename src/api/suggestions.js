@@ -2,8 +2,9 @@ import { pri } from './api-config';
 
 export default {
     // Create new collection
-    suggestGame(userId, gameId) {
-        return pri.post(`suggestions/${userId}/${gameId}`)
+    suggestGame(attributes) {
+        debug(attributes);
+        return pri.post('suggestions', { attributes })
         .then(res => res)
         .catch(err => err);
     },
