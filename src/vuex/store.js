@@ -7,6 +7,7 @@ import games from 'store/games/module';
 import collections from 'store/collections/module';
 import items from 'store/items/module';
 import suggestions from 'store/suggestions/module';
+import events from 'store/events/module';
 
 Vue.use(Vuex);
 Vue.config.debug = true;
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         collections,
         items,
         suggestions,
+        events,
     },
     strict: debug,
     middlewares: [createLogger()],

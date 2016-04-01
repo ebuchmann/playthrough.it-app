@@ -23,10 +23,9 @@
 
 <script>
     import { gameSearch } from 'store/games/actions';
-    import { addGame } from 'store/items/actions';
 
     export default {
-        props: ['game'],
+        props: ['game', 'action'],
 
         data() {
             return {
@@ -43,7 +42,6 @@
                 list: ({ games }) => games.results,
             },
             actions: {
-                addGame,
                 gameSearch,
             },
         },
@@ -51,7 +49,7 @@
         methods: {
             addGame2() {
                 if (this.list.length) {
-                    this.game = this.list[this.selected];
+                    this.action(this.list[this.selected]);
                     this.text = '';
                 }
                 // if (this.list.length) {

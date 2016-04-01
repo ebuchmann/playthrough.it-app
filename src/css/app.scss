@@ -30,6 +30,14 @@
     @include clearfix;
 }
 
+.col-2 {
+    @include gallery(12);
+
+    @include breakpoint(md) {
+        @include gallery(6 of 12);
+    }
+}
+
 .col-3 {
     @include gallery(12);
 
@@ -46,4 +54,14 @@
 }
 .col-6-last {
     @include span(6 of 12 last);
+}
+
+.border-yellow {
+    border-color: $yellow;
+}
+.border-green {
+    border-color: $green;
+}
+.border-blue {
+    border-color: $blue;
 }

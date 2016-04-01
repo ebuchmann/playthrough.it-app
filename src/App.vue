@@ -2,6 +2,7 @@
     <div class="vue-app" @click="close">
 
         <login-modal></login-modal>
+        <popup-notification></popup-notification>
 
         <div class="top-nav-wrapper">
             <div class="container">
@@ -18,6 +19,7 @@
                             <div slot="content" class="top-menu-dropdown">
                                 <a v-link="{ name: 'collections' }">Collections</a>
                                 <a v-link="{ name: 'profile' }">Profile</a>
+                                <a v-link="{ name: 'userProfile' }">Your Profile</a>
                                 <a href="#" @click="doLogout()">Logout</a>
                             </div>
                         </click-menu>
@@ -40,6 +42,7 @@
     import store from 'store/store';
     import LoginModal from 'component/LoginModal';
     import ClickMenu from 'component/ClickMenu';
+    import PopupNotification from 'component/PopupNotification';
     import { logout } from 'store/users/actions';
 
     export default {
@@ -57,6 +60,7 @@
         components: {
             LoginModal,
             ClickMenu,
+            PopupNotification,
         },
 
         methods: {

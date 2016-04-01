@@ -3,6 +3,7 @@ import Home from 'page/Home';
 import PublicCollections from 'page/PublicCollections';
 import CollectionSingle from 'page/CollectionSingle';
 import Profile from 'page/Profile';
+import UserProfile from 'page/UserProfile';
 import NotFound from 'page/NotFound';
 
 export function configRouter(router) {
@@ -26,6 +27,10 @@ export function configRouter(router) {
         '/profile/:userId': {
             name: 'user_profile',
             component: Profile,
+        },
+        '/user-profile': {
+            name: 'userProfile',
+            component: UserProfile,
         },
         '*': {
             component: NotFound,

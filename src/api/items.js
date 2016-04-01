@@ -1,4 +1,4 @@
-import { pub } from './api-config';
+import { pub, pri } from './api-config';
 
 export default {
     // Adds a game to a collection
@@ -23,7 +23,7 @@ export default {
 
     // Updates a game list item
     updateItem(id, attributes) {
-        return pub.patch(`items/${id}`, {
+        return pri.patch(`items/${id}`, {
             attributes,
         })
         .then(res => res)

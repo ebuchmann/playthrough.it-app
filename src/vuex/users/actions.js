@@ -7,7 +7,6 @@ export const changeBanner = ({ dispatch }, newBanner) => {
 
 export const getCurrentUser = ({ dispatch }) => new Promise(resolve => {
     users.getCurrentUser().then(({ data }) => {
-        debug('resolving');
         dispatch(types.SET_CURRENT_USER, data);
         resolve();
     });

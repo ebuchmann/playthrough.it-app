@@ -22,3 +22,7 @@ export const UPDATE_ITEM = 'UPDATE_ITEM';
 
 // Suggestions module
 export const GET_SUGGESTIONS = 'GET_SUGGESTIONS';
+
+// Events module
+export const SEND_EVENT = 'SEND_EVENT';
+export const CLEAR_EVENT = 'CLEAR_EVENT';

@@ -20,11 +20,12 @@ export const getAllCollections = ({ dispatch }) => {
     });
 };
 
-export const getUsersCollections = ({ dispatch }, userId) => {
+export const getUsersCollections = ({ dispatch }, userId) => new Promise(resolve => {
     collections.getUsersCollections(userId).then(res => {
         dispatch(types.GET_ALL_COLLECTIONS, res.data.attributes);
+        resolve();
     });
-};
+});
 
 export const getCollection = ({ dispatch }, collectionId) => new Promise(resolve => {
     collections.getCollection(collectionId).then(res => {

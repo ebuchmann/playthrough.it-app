@@ -1,47 +1,48 @@
 <template>
-    <div class="collection-single" v-if="!$loadingRouteData">
+    <div class="collection-single">
 
-        <profile-banner :banner="collection.user.banner"></profile-banner>
+        <div v-if="!$loadingRouteData">
+            <profile-banner :banner="collection.user.banner"></profile-banner>
 
-        <div class="container">
+            <div class="container">
 
-            <div class="status-bar" v-bind:style="{ width: percent + '%'}"></div>
+                <div class="status-bar" v-bind:style="{ width: percent + '%'}"></div>
 
-            <div class="row">
-                <div class="col-6">
-                    <h1 class="title" @click="editHeader()">
-                        <template v-if="!header">{{ collection.title }}</template>
-                        <template v-else>
-                            <input @keyup.enter.stop="saveHeader()" @keyup.esc.stop="header = false" class="edit-title" v-else v-model="headerText" /><br />
-                            <button @click.stop="saveHeader()">Save</button>
-                            <button @click.stop="header = false">Cancel</button>
-                        </template>
-                    </h1>
+                <div class="row">
+                    <div class="col-6">
+                        <h1 class="title" @click="editHeader()">
+                            <template v-if="!header">{{ collection.title }}</template>
+                            <template v-else>
+                                <input @keyup.enter.stop="saveHeader()" @keyup.esc.stop="header = false" class="edit-title" v-else v-model="headerText" /><br />
+                                <button @click.stop="saveHeader()">Save</button>
+                                <button @click.stop="header = false">Cancel</button>
+                            </template>
+                        </h1>
+                    </div>
+                    <div class="col-6-last">
+                        <p class="collection-status">
+                            Started on <strong>{{ collection.created_at | date }}</strong> <br />
+                            Collection is <span :class="collection.active ? '-green' : '-red'">{{ activeText }}</span> and <span :class="collection.public ? '-green' : '-red'">{{ publicText }}</span><br />
+                            You are <span :class="collection.suggestions ? '-green' : '-red'">{{ suggestionText }}</span> for suggestions on games<br />
+                            <strong>{{ collection.completed }}</strong> of <strong>{{ collection.games }}</strong> games complete!<br />
+                            <template v-if="currentUser._id === collection.user._id">
+                                <span @click="this.editOpened = !this.editOpened">Edit collection</span><br />
+                                <span @click="this.gameAddOpened = !this.gameAddOpened">Add Games</span>
+                            </template>
+                        </p>
+                    </div>
                 </div>
-                <div class="col-6-last">
-                    <p class="collection-status">
-                        Started on <strong>{{ collection.created_at | date }}</strong> <br />
-                        Collection is <span :class="collection.active ? '-green' : '-red'">{{ activeText }}</span> and <span :class="collection.public ? '-green' : '-red'">{{ publicText }}</span><br />
-                        You are <span :class="collection.suggestions ? '-green' : '-red'">{{ suggestionText }}</span> for suggestions on games<br />
-                        <strong>{{ collection.completed }}</strong> of <strong>{{ collection.games }}</strong> games complete!<br />
-                        <template v-if="currentUser._id === collection.user._id">
-                            <span @click="this.editOpened = !this.editOpened">Edit collection</span><br />
-                            <span @click="this.gameAddOpened = !this.gameAddOpened">Add Games</span>
-                        </template>
-                    </p>
-                </div>
+
+                <game-suggestion v-if="currentUser && currentUser._id !== collection.user._id" :collection="collection"></game-suggestion>
+
+                <template v-if="currentUser._id === collection.user._id">
+                    <suggested-games v-for="suggestion in suggestions" :suggestion="suggestion"></suggested-games>
+                    <edit-collection v-if="editOpened" :opened.sync="editOpened"></edit-collection>
+                    <item-add v-if="gameAddOpened"></item-add>
+                </template>
+                <game-table></game-table>
             </div>
-
-            <game-suggestion v-if="currentUser && currentUser._id !== collection.user._id" :collection="collection"></game-suggestion>
-
-            <template v-if="currentUser._id === collection.user._id">
-                <suggested-games v-for="suggestion in suggestions" :suggestion="suggestion"></suggested-games>
-                <edit-collection v-if="editOpened" :opened.sync="editOpened"></edit-collection>
-                <item-add v-if="gameAddOpened"></item-add>
-            </template>
-            <game-table></game-table>
         </div>
-
     </div>
 </template>
 

@@ -27,7 +27,7 @@
         vuex: {
             getters: {
                 collection: ({ collections, route }) => collections.collections.find(collection => collection._id === route.params.collectionId),
-                games: ({ items, route }) => items.items.filter(game => game.collectionId === route.params.collectionId),
+                games: ({ items, route }) => items.items.filter(game => game.challenge === route.params.collectionId),
             },
             actions: {
 

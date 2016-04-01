@@ -21,6 +21,10 @@ $green-highlight:           rgba($green, .15);
 $red:                       #ee4025 !default;
 $yellow:                    #fdd900 !default;
 
+$twitch-color:              #6441A5;
+$facebook-color:            #3b5998;
+$twitter-color:             #55acee;
+
 $font-size-root:            18px !default;
 $font-family-sans-serif:    'Open Sans', sans-serif !default;
 $font-family-base:          $font-family-sans-serif !default;
@@ -55,6 +59,10 @@ $icon-inprogress:           '\f11b';
 $icon-upnext:               '\f093';
 $icon-caret-down:           '\f0d7';
 $icon-caret-up:             '\f0d8';
+
+$icon-twitch:                '\f1e8';
+$icon-facebook:              '\f230';
+$icon-twitter:               '\f081';
 
 // Game status
 $statuses: (

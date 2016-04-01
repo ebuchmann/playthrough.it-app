@@ -7,6 +7,7 @@
             </div>
             <div class="right">
                 Right
+                <button @click="sender()">Event</button>
             </div>
         </div>
 
@@ -14,8 +15,22 @@
 </template>
 
 <script>
-    export default {
+    import { sendEvent } from 'store/events/actions';
 
+    export default {
+        vuex: {
+            actions: {
+                sendEvent,
+            },
+        },
+
+        methods: {
+            sender() {
+                const types = ['success', 'warning', 'error', 'default'];
+                const number = Math.floor(Math.random() * 4);
+                this.sendEvent({ message: Math.random(), type: types[number] });
+            },
+        },
     };
 </script>
 

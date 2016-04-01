@@ -19,5 +19,8 @@
   ],
   "devDependencies": {
     "susy": "^2.2.12"
+  },
+  "dependencies": {
+    "Chart.js": "^1.0.2"
   }
 }
