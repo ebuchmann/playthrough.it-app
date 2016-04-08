@@ -2,6 +2,7 @@ import {
     SET_CURRENT_USER,
     LOG_OUT,
     CHANGE_BANNER,
+    UPDATE_USER,
 } from '../mutation-types';
 
 export const state = {
@@ -22,6 +23,10 @@ export const mutations = {
 
     [CHANGE_BANNER](state, newBanner) {
         state.banner = newBanner;
+    },
+
+    [UPDATE_USER](state, user) {
+        state.currentUser = user;
     },
 
 };

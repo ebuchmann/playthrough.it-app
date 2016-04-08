@@ -28,7 +28,7 @@
         methods: {
             doAddGame(game) {
                 this.addGame(this.collectionId, game._id);
-                this.sendEvent(`${game.title} added.`);
+                this.sendEvent({ type: 'success', message: `${game.title} added!` });
             },
         },
 
@@ -45,11 +45,13 @@
         background: #fff;
         border: 5px solid lighten(#01afee, 30);
         padding: 25px;
+        width: 100%;
         margin: 25px 0;
 
         > .text {
             text-align: center;
-            font-size: 3rem;
+            font-size: 2rem;
+            margin-bottom: 0;
 
             > .input {
                 border: none;

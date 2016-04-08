@@ -6,13 +6,15 @@ export const GAME_SEARCH = 'GAME_SEARCH';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const LOG_OUT = 'LOG_OUT';
 export const CHANGE_BANNER = 'CHANGE_BANNER';
+export const UPDATE_USER = 'UPDATE_USER';
 
-// Collections Module
+// Challenge Module
 export const ADD_COLLECTION = 'ADD_COLLECTION';
 export const GET_ALL_COLLECTIONS = 'GET_ALL_COLLECTIONS';
 export const GET_COLLECTION = 'GET_COLLECTION';
 export const CHANGE_GAME_COUNT = 'CHANGE_GAME_COUNT';
 export const UPDATE_COLLECTION = 'UPDATE_COLLECTION';
+export const REMOVE_CHALLENGE = 'REMOVE_CHALLENGE';
 
 // Items Module
 export const GET_GAME_LIST = 'GET_GAME_LIST';

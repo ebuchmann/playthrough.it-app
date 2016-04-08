@@ -26,9 +26,10 @@
 
 .top-nav-wrapper {
     background-color: #fff;
-    box-shadow: $medium-shadow;
+    box-shadow: $light-shadow;
+    position: relative;
 
-    &::after {
+    &::before {
         content: '';
         height: 4px;
         width: 100%;

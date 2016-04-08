@@ -1,22 +1,25 @@
 <template>
     <div class="game-list">
-
-        <table class="game-table">
-            <thead>
-                <tr>
-                    <th @click="changeOrder('status')" :class="{sort: orderBy === 'status'}">
-                        <span :class="direction > 0 ? 'asc' : 'desc'"></span>
-                    </th>
-                    <th v-for="value in possibleDisplay" v-if="collection.display[value]" @click="changeOrder(value)" :class="{sort: orderBy === value}">
-                        {{{ value | capitalize }}}
-                        <span :class="direction > 0 ? 'asc' : 'desc'"></span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction" :game="game" :display="collection.display" :user_id="collection.user._id" transition="add-game"></tbody>
-        </table>
-        <span @click="showMore()">Show more...</span>
-
+        <template v-if="games.length">
+            <table class="game-table">
+                <thead>
+                    <tr>
+                        <th @click="changeOrder('status')" :class="{sort: orderBy === 'status'}">
+                            <span :class="direction > 0 ? 'asc' : 'desc'"></span>
+                        </th>
+                        <th v-for="value in possibleDisplay" v-if="collection.display[value.display]" @click="changeOrder(value.filter)" :class="{sort: orderBy === value.filter}">
+                            {{{ value.display | capitalize }}}
+                            <span :class="direction > 0 ? 'asc' : 'desc'"></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction | filterBy customFilter" :game="game" :display="collection.display" :user_id="collection.user._id" transition="add-game"></tbody>
+            </table>
+            <span @click="showMore()">Show more...</span>
+        </template>
+        <div v-else>
+            <p>No games, add some!</p>
+        </div>
     </div>
 </template>
 
@@ -24,6 +27,8 @@
     import GameRow from './GameRow';
 
     export default {
+        props: ['filter'],
+
         vuex: {
             getters: {
                 collection: ({ collections, route }) => collections.collections.find(collection => collection._id === route.params.collectionId),
@@ -36,10 +41,18 @@
 
         data() {
             return {
-                orderBy: 'name',
+                orderBy: 'game.title',
                 direction: 1,
                 max: 50,
-                possibleDisplay: ['name', 'platform', 'genres', 'time', 'date', 'rating', 'deaths'],
+                possibleDisplay: [
+                    { filter: 'game.title', display: 'title' },
+                    { filter: 'game.platform', display: 'platform' },
+                    { filter: 'game.genres', display: 'genres' },
+                    { filter: 'time', display: 'time' },
+                    { filter: 'completed_on', display: 'date' },
+                    { filter: 'rating', display: 'rating' },
+                    { filter: 'deaths', display: 'deaths' },
+                ],
             };
         },
 
@@ -59,6 +72,13 @@
             },
             showMore() {
                 this.max = this.max + 100;
+            },
+            customFilter(item) {
+                switch (this.filter) {
+                case 'Finished': return item.status === 'Finished';
+                case 'Unfinished': return item.status !== 'Finished';
+                default: return item;
+                }
             },
         },
 
@@ -80,6 +100,7 @@
         width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
+        box-shadow: $light-shadow;
 
         > thead {
             background-color: $blue;
@@ -92,6 +113,7 @@
                 border-top: 1px solid #ddd;
                 color: #fff;
                 cursor: pointer;
+                font-weight: normal;
 
                 > span {
                     display: none;
@@ -113,6 +135,7 @@
                 > span {
                     font-family: FontAwesome;
                     display: inline-block;
+                    margin-left: 10px;
                 }
             }
         }
@@ -125,7 +148,7 @@
     }
 
     .add-game-transition {
-        transition: $all-slow;
+        transition: $all-medium;
         opacity: 1;
         border-color: inherit;
     }

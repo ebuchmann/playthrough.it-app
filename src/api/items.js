@@ -9,24 +9,18 @@ export default {
 
     // Get a collections items
     getCollectionGames(id) {
-        return pub.get(`items/collection/${id}`)
-        .then(res => res)
-        .catch(err => err);
+        return pub.get(`items/collection/${id}`);
     },
 
     // Remove a game
     removeGame(id) {
-        return pub.delete(`items/${id}`)
-        .then(res => res)
-        .catch(err => err);
+        return pub.delete(`items/${id}`);
     },
 
     // Updates a game list item
     updateItem(id, attributes) {
         return pri.patch(`items/${id}`, {
             attributes,
-        })
-        .then(res => res)
-        .catch(err => err);
+        });
     },
 };

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="currentMessage" :class="['popup-notification', currentMessage.type, { showing: showing }]"
+    <div v-if="currentMessage" :class="['popup-notification', currentMessage.type, vertical, horizontal, { showing: showing }]"
     @mouseover="stopAnimation"
     @mouseout="startAnimation">
         <div class="message">
@@ -37,11 +37,19 @@
         props: {
             duration: {
                 type: Number,
-                default: 6000,
+                default: 4000,
             },
             debounce: {
                 type: Number,
-                default: 300,
+                default: 250,
+            },
+            vertical: {
+                type: String,
+                default: 'bottom',
+            },
+            horizontal: {
+                type: String,
+                default: 'left',
             },
         },
 
@@ -102,24 +110,29 @@
 
     .popup-notification {
         position: fixed;
-        bottom: 10px;
-        left: 10px;
         border-width: 2px;
         border-style: solid;
         z-index: 9999;
-        transform: translateY(120%);
         transition: $all-fast;
         box-shadow: $light-shadow;
         border-radius: 4px;
 
+        &.left {
+            left: 10px;
+        }
+
         &.right {
             right: 10px;
-            left: auto;
         }
 
         &.top {
             top: 10px;
-            bottom: auto;
+            transform: translateY(-120%);
+        }
+
+        &.bottom {
+            bottom: 10px;
+            transform: translateY(120%);
         }
 
         &.showing {
@@ -144,10 +157,10 @@
         }
 
         > .close {
-            position: absolute;
-            top: 50%;
             right: 10px;
+            top: 50%;
             transform: translateY(-50%);
+            position: absolute;
             color: rgba(#000, .6);
             cursor: pointer;
 

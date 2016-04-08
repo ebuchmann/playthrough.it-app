@@ -9,6 +9,8 @@ export const state = {
 
 export const mutations = {
     [SEND_EVENT](state, event) {
+        event.id = state.events.length + 1;
+        event.new = true;
         state.events.push(event);
     },
     [CLEAR_EVENT](state, messageId) {

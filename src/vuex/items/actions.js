@@ -26,6 +26,7 @@ export const updateItem = ({ dispatch }, itemId, property) => new Promise((resol
     items.updateItem(itemId, property).then(res => {
         dispatch(types.UPDATE_COLLECTION, res.data.attributes.collection);
         dispatch(types.UPDATE_ITEM, res.data.attributes.item);
+        resolve();
     }).catch(err => {
         reject(err);
     });

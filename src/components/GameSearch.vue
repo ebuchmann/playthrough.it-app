@@ -6,13 +6,13 @@
             @keyup.down="moveSelected(1)"
             @keyup.up="moveSelected(-1)"
             @keyup="doSearch"
-            @keyup.enter="addGame2" />
+            @keyup.enter="doAddGame" />
 
         <ul class="search-list" v-show="opened">
             <li v-for="game in list"
                 class="{{$index === selected ? 'selected' : ''}}"
                 @mouseover="selected = $index"
-                @click="addGame2">
+                @click="doAddGame">
                 {{ game.title }}
                 <template v-if="filter.type === '*'"> - {{ game.platform }}</template>
             </li>
@@ -47,14 +47,11 @@
         },
 
         methods: {
-            addGame2() {
+            doAddGame() {
                 if (this.list.length) {
                     this.action(this.list[this.selected]);
                     this.text = '';
                 }
-                // if (this.list.length) {
-                //     this.addGame(this.$route.params.collectionId, this.list[this.selected]._id);
-                // }
             },
 
             doSearch(event) {
@@ -70,14 +67,18 @@
             },
 
             moveSelected(number) {
-                const total = this.list.length - 1;
+                if (this.list.length) {
+                    const total = this.list.length - 1;
 
-                if (this.selected === 0 && number === -1) {
-                    this.selected = total;
-                } else if (this.selected === total && number === 1) {
-                    this.selected = 0;
-                } else {
-                    this.selected = this.selected + number;
+                    if (this.selected === 0 && number === -1) {
+                        this.selected = total;
+                    } else if (this.selected === total && number === 1) {
+                        this.selected = 0;
+                    } else {
+                        this.selected = this.selected + number;
+                    }
+
+                    this.text = this.list[this.selected].title;
                 }
             },
 
@@ -107,9 +108,9 @@
             border: none;
             border-bottom: 2px solid #222;
             width: 500px;
-            font-size: 3rem;
+            font-size: 1.7rem;
             color: $blue-dark;
-            line-height: 1.3;
+            line-height: 2rem;
             transition: $all-fast;
 
             &:focus, &:active {

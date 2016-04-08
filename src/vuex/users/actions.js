@@ -17,3 +17,11 @@ export const logout = ({ dispatch }) => {
         dispatch(types.LOG_OUT);
     });
 };
+
+export const updateUser = ({ dispatch }, attributes) => new Promise(resolve => {
+    users.updateUser(attributes).then(({ data }) => {
+        dispatch(types.UPDATE_USER, data.attributes);
+        dispatch(types.SEND_EVENT, { type: 'success', message: 'Profile updated.' });
+        resolve();
+    });
+});

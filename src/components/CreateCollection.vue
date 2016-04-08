@@ -1,7 +1,7 @@
 <template>
     <div class="create-collection">
         <div class="before-adding" :class="{ 'during-adding': opened }" @click="openMenu">
-            <p v-if="!opened" class="before">Add a new collection</p>
+            <p v-if="!opened" class="before">Create a new collection</p>
             <div class="opened-container" v-show="opened">
                 <input id="collection" class="collection-input" v-model="name" placeholder="Name your collection" @keyup.enter="saveCollection" autocomplete="off" /><br />
                 <button class="button-save" @click.stop="saveCollection">Save it</button>

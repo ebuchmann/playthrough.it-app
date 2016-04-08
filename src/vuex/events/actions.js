@@ -1,7 +1,7 @@
 import * as types from 'store/mutation-types';
 
 export const sendEvent = ({ dispatch, state }, { message, type }) => {
-    dispatch(types.SEND_EVENT, { id: (state.events.events.length + 1), new: true, message, type });
+    dispatch(types.SEND_EVENT, { message, type });
 };
 
 export const clearEvent = ({ dispatch }, messageId, debounce) => {

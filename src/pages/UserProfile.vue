@@ -1,15 +1,14 @@
 <template>
     <div class="user-profile ">
 
-        <profile-banner :banner="currentUser.banner"></profile-banner>
-
         <div class="container">
             <div class="profile-left">
                 <profile-card></profile-card>
             </div>
             <div class="profile-right">
 
-                <h2 class="section-title">My challenges <small>2 of 5 challenges</small></h2>
+                <context-menu :sub-pages.sync="subPages"></context-menu>
+                <h2 class="section-title">My collections <small>{{ collections.length }} of {{ currentUser.maxChallenges}} collections</small></h2>
 
                 <div class="row">
                     <template v-for="collection in collections">
@@ -17,13 +16,13 @@
                             <collection-card  :collection="collection"></collection-card>
                         </div>
                     </template>
+                    <div class="col-2" v-if="collections.length < currentUser.maxChallenges">
+                        <create-collection></create-collection>
+                    </div>
                 </div>
 
-                <div class="add-collection">
-                    <h2>Start a new challenge</h2>
-                </div>
 
-                <h2 class="section-title">Activity</h2>
+                <h2 class="section-title">Recent Activity</h2>
 
                 <div class="activity-feed">
                     <div class="item positive">
@@ -49,9 +48,10 @@
 </template>
 
 <script>
-    import ProfileBanner from 'component/ProfileBanner';
     import ProfileCard from 'component/ProfileCard';
     import CollectionCard from 'component/CollectionCard';
+    import CreateCollection from 'component/CreateCollection';
+    import ContextMenu from 'component/ContextMenu';
     import { getUsersCollections } from 'store/collections/actions';
 
     export default {
@@ -63,6 +63,15 @@
             actions: {
                 getUsersCollections,
             },
+        },
+
+        data() {
+            return {
+                subPages: [
+                    { title: 'View Profile', opened: true },
+                    { title: 'Manage Profile', opened: false },
+                ],
+            };
         },
 
         computed: {
@@ -77,9 +86,10 @@
         },
 
         components: {
-            ProfileBanner,
             ProfileCard,
             CollectionCard,
+            CreateCollection,
+            ContextMenu,
         },
 
         route: {

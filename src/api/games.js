@@ -8,8 +8,6 @@ export default {
                 query,
                 filter,
             },
-        })
-        .then(res => res)
-        .catch(err => err);
+        });
     },
 };

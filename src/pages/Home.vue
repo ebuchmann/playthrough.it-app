@@ -1,6 +1,10 @@
 <template>
     <div class="home-page">
 
+        <div class="hero">
+
+        </div>
+
         <div class="container">
             <div class="left">
                 Left
@@ -34,6 +38,13 @@
     };
 </script>
 
-<style>
+<style lang="sass">
+    @import '../css/includes';
 
+    .home-page {
+        > .hero {
+            height: 400px;
+            background-color: $blue;
+        }
+    }
 </style>

@@ -94,10 +94,6 @@
                 this.updateItem(this.game._id, { status });
             },
 
-            open() {
-                this.opened = !this.opened;
-            },
-
             updateGameItem(property) {
                 this.updateItem(this.game._id, property);
             },
@@ -116,10 +112,6 @@
                 this.updateGameItem({ completed_on: this.completed_on });
             },
             'send-update'(property, value, element) {
-                debug(property);
-                debug(value);
-                debug(element);
-                debug(this.game._id);
                 element.disabled = true;
                 this.updateItem(this.game._id, { [property]: value }).then(() => {
                     element.disabled = false;

@@ -2,45 +2,45 @@
     <div class="collection-single">
 
         <div v-if="!$loadingRouteData">
-            <profile-banner :banner="collection.user.banner"></profile-banner>
+            <div class="full">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="title" @click="editHeader()">
+                                <template v-if="!header">{{ collection.title }}</template>
+                                <template v-else>
+                                    <input @keyup.enter.stop="saveHeader()" @keyup.esc.stop="header = false" class="edit-title" v-else v-model="headerText" /><br />
+                                    <button @click.stop="saveHeader()">Save</button>
+                                    <button @click.stop="header = false">Cancel</button>
+                                </template>
+                            </h1>
+                        </div>
+                        <div class="col-6-last">
+                            <user-card></user-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="container">
 
-                <div class="status-bar" v-bind:style="{ width: percent + '%'}"></div>
-
-                <div class="row">
-                    <div class="col-6">
-                        <h1 class="title" @click="editHeader()">
-                            <template v-if="!header">{{ collection.title }}</template>
-                            <template v-else>
-                                <input @keyup.enter.stop="saveHeader()" @keyup.esc.stop="header = false" class="edit-title" v-else v-model="headerText" /><br />
-                                <button @click.stop="saveHeader()">Save</button>
-                                <button @click.stop="header = false">Cancel</button>
-                            </template>
-                        </h1>
-                    </div>
-                    <div class="col-6-last">
-                        <p class="collection-status">
-                            Started on <strong>{{ collection.created_at | date }}</strong> <br />
-                            Collection is <span :class="collection.active ? '-green' : '-red'">{{ activeText }}</span> and <span :class="collection.public ? '-green' : '-red'">{{ publicText }}</span><br />
-                            You are <span :class="collection.suggestions ? '-green' : '-red'">{{ suggestionText }}</span> for suggestions on games<br />
-                            <strong>{{ collection.completed }}</strong> of <strong>{{ collection.games }}</strong> games complete!<br />
-                            <template v-if="currentUser._id === collection.user._id">
-                                <span @click="this.editOpened = !this.editOpened">Edit collection</span><br />
-                                <span @click="this.gameAddOpened = !this.gameAddOpened">Add Games</span>
-                            </template>
-                        </p>
-                    </div>
-                </div>
-
-                <game-suggestion v-if="currentUser && currentUser._id !== collection.user._id" :collection="collection"></game-suggestion>
 
                 <template v-if="currentUser._id === collection.user._id">
                     <suggested-games v-for="suggestion in suggestions" :suggestion="suggestion"></suggested-games>
-                    <edit-collection v-if="editOpened" :opened.sync="editOpened"></edit-collection>
-                    <item-add v-if="gameAddOpened"></item-add>
                 </template>
-                <game-table></game-table>
+
+                <div class="row">
+                    <div class="col-left">
+                        <filter-list :filter.sync="filter"></filter-list>
+                        <game-suggestion :collection="collection"></game-suggestion>
+                    </div>
+                    <div class="col-right">
+                        <context-menu :sub-pages.sync="subPages"></context-menu>
+                        <item-add v-show="subPages[1].opened"></item-add>
+                        <edit-collection v-show="subPages[2].opened"></edit-collection>
+                        <game-table :filter.sync="filter"></game-table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -50,9 +50,11 @@
     import GameTable from 'component/GameTable';
     import ItemAdd from 'component/ItemAdd';
     import EditCollection from 'component/EditCollection';
-    import ProfileBanner from 'component/ProfileBanner';
     import GameSuggestion from 'component/GameSuggestion';
     import SuggestedGames from 'component/SuggestedGames';
+    import FilterList from 'component/FilterList';
+    import ContextMenu from 'component/ContextMenu';
+    import UserCard from 'component/UserCard';
 
     import { getCollection, updateCollection } from 'store/collections/actions';
     import { getCollectionGames } from 'store/items/actions';
@@ -77,32 +79,31 @@
         components: {
             GameTable,
             ItemAdd,
-            ProfileBanner,
             EditCollection,
             GameSuggestion,
             SuggestedGames,
+            FilterList,
+            ContextMenu,
+            UserCard,
         },
 
         data() {
             return {
                 header: false,
                 editOpened: false,
-                gameAddOpened: false,
+                filter: '',
+                subPages: [
+                    { title: 'View Games', opened: true },
+                    { title: 'Add Games', opened: false },
+                    { title: 'Manage Collection', opened: false },
+                    { title: 'Manage Suggestions', opened: false },
+                ],
             };
         },
 
         computed: {
             headerText() {
                 return this.collection.title;
-            },
-            activeText() {
-                return this.collection.active ? 'Open' : 'Closed';
-            },
-            publicText() {
-                return this.collection.public ? 'Public' : 'Private';
-            },
-            suggestionText() {
-                return this.collection.suggestions ? 'Open' : 'Not Open';
             },
             percent() {
                 return Math.round(10 * (this.collection.completed / this.collection.games * 100)) / 10 || 0;
@@ -141,6 +142,20 @@
 <style lang="sass">
     @import '../css/includes';
 
+    .full {
+        background: #fff;
+        box-shadow: $light-shadow;
+        padding: 30px 0;
+        margin-bottom: 30px;
+    }
+
+    .col-left {
+        @include span(2 of 12);
+    }
+    .col-right {
+        @include span(10 of 12 last);
+    }
+
     .collection-single {
 
         .title {
@@ -161,27 +176,6 @@
                 width: 100%;
             }
         }
-    }
-
-    .collection-status {
-        text-align: right;
-
-        > span {
-            font-weight: bold;
-        }
-
-        > .-red {
-            color: $red;
-        }
-        > .-green {
-            color: $green;
-        }
-    }
-
-    .status-bar {
-        margin-bottom: 25px;
-        background: $green;
-        height: 4px;
     }
 
 </style>

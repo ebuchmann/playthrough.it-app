@@ -5,32 +5,103 @@
             <img src="../assets/portrait.jpg" alt="{{ currentUser.username }}" />
         </div>
 
-        <p class="username">{{ currentUser.username }}</p>
+        <p v-if="!editName" class="username canedit" @click="doEditName()">{{ currentUser.username }}</p>
+        <div v-else class="edit-name">
+            <input :value="currentUser.username" @keyup.enter="doSaveName" @keyup.esc="editName = !editName" />
+            <button>Cancel</button>
+            <button>Save</button>
+        </div>
+
 
         <p><strong>Info</strong></p>
         <i class="fa fa-calendar"></i> Joined 3 days ago<br />
-        <i class="fa fa-envelope"></i> me@ebuchmann.com<br /><br />
+        <span v-if="!editEmail" class="canedit" @click="doEditEmail()">
+            <i class="fa fa-envelope"></i> {{ currentUser.email }}<br /><br />
+        </span>
+        <div v-else class="edit-email">
+            <input :value="currentUser.email" @keyup.enter="doSaveEmail" @keyup.esc="editEmail = !editEmail" />
+            <button>Cancel</button>
+            <button>Save</button>
+        </div>
 
         <hr />
 
         <p><strong>Authenticated with:</strong></p>
-        <div class="auth-with">
-            <i class="fa fa-twitch"></i> Connected with Twitch <i class="fa fa-check true"></i>
-        </div>
-        <div class="auth-with">
-            <i class="fa fa-facebook"></i> Not connected with Facebook <i class="fa fa-check false"></i>
-        </div>
-        <div class="auth-with">
-            <i class="fa fa-twitter"></i> Connected with Twitter <i class="fa fa-check true"></i>
+
+        <div class="auth-with" v-for="auth in authTypes">
+            <template v-if="currentUser[auth]">
+                <i class="fa fa-{{auth}}"></i> Connected with {{ auth | capitalize}} <i class="fa fa-check true"></i>
+            </template>
+            <template v-else>
+                <i class="fa fa-{{auth}}"></i> Not connected with {{ auth | capitalize}} <i class="fa fa-check false"></i>
+                <button @click="doLogin(auth)">test</button>
+            </template>
         </div>
     </div>
 </template>
 
 <script>
+    import { updateUser } from 'store/users/actions';
+
     export default {
         vuex: {
             getters: {
                 currentUser: ({ users }) => users.currentUser,
+            },
+            actions: {
+                updateUser,
+            },
+        },
+
+        data() {
+            return {
+                authTypes: ['twitch', 'facebook', 'twitter'],
+                editName: false,
+                editEmail: false,
+            };
+        },
+
+        methods: {
+            doLogin(type) {
+                const popup = window.open(`http://localhost:3033/connect/${type}`, 'Associate a new account with PlayThrough.it', 'scrollbars=yes,width=650,height=500');
+
+                this._oauthInterval = window.setInterval(() => {
+                    if (popup.closed) {
+                        window.clearInterval(this._oauthInterval);
+
+                        this.getCurrentUser();
+                        this.toggle();
+                    }
+                }, 200);
+            },
+
+            doEditName() {
+                this.editName = !this.editName;
+                setTimeout(() => {
+                    this.$el.querySelector('.edit-name > input').focus();
+                }, 30);
+            },
+
+            doEditEmail() {
+                this.editEmail = !this.editEmail;
+                setTimeout(() => {
+                    this.$el.querySelector('.edit-email > input').focus();
+                }, 30);
+            },
+
+            doSaveEmail() {
+                const email = this.$el.querySelector('.edit-email > input').value;
+                debug(`Saving email as ${email}`);
+                this.updateUser({ email });
+                this.editEmail = !this.editEmail;
+            },
+
+            doSaveName() {
+                const username = this.$el.querySelector('.edit-name > input').value;
+                debug(`Saving name as ${username}`);
+                this.updateUser({ username }).then(() => {
+                    this.editName = !this.editName;
+                });
             },
         },
     };
@@ -52,6 +123,17 @@
 
         > hr {
             margin: 0 0 - $padding;
+        }
+    }
+
+    .edit-name {
+
+        > input {
+            font-size: 2rem;
+            border: none;
+            border-bottom: 1px solid black;
+            width: 100%;
+            outline: none;
         }
     }
 
@@ -101,6 +183,14 @@
         }
         > .false {
             color: $gray-light;
+        }
+    }
+
+    .canedit {
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($yellow, .1);
         }
     }
 </style>

@@ -4,6 +4,7 @@ import {
     GET_ALL_COLLECTIONS,
     GET_COLLECTION,
     CHANGE_GAME_COUNT,
+    REMOVE_CHALLENGE,
 } from '../mutation-types';
 
 export const state = {
@@ -43,6 +44,13 @@ export const mutations = {
                     state.collections[index][key] = collection[key];
                 }
             }
+        }
+    },
+
+    [REMOVE_CHALLENGE](state, challengeId) {
+        const foundChallenge = state.collections.find(chal => chal._id === challengeId);
+        if (foundChallenge) {
+            state.collections.splice(state.collections.indexOf(foundChallenge), 1);
         }
     },
 };

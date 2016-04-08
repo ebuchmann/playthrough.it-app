@@ -65,3 +65,20 @@
 .border-blue {
     border-color: $blue;
 }
+
+.card-top {
+    background-color: $blue;
+    border-bottom: 4px solid $blue-dark;
+    padding: 10px 30px;
+    color: #fff;
+
+    > h1, > h2, > h3, > h4 {
+        margin-bottom: 0;
+        font-weight: normal;
+    }
+}
+
+.card-body {
+    padding: 30px;
+    @include clearfix;
+}
