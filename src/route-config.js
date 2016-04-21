@@ -6,6 +6,12 @@ import Profile from 'page/Profile';
 import UserProfile from 'page/UserProfile';
 import NotFound from 'page/NotFound';
 
+// Subroute components
+import EditProfile from 'component/EditProfile';
+import ItemAdd from 'component/ItemAdd';
+import EditCollection from 'component/EditCollection';
+import SuggestedGames from 'component/SuggestedGames';
+
 export function configRouter(router) {
     router.map({
         '/': {
@@ -19,6 +25,20 @@ export function configRouter(router) {
         '/collection/:collectionId': {
             name: 'single_collection',
             component: CollectionSingle,
+            subRoutes: {
+                '/add': {
+                    name: 'addGames',
+                    component: ItemAdd,
+                },
+                '/manage': {
+                    name: 'manageCollection',
+                    component: EditCollection,
+                },
+                '/suggestions': {
+                    name: 'gameSuggestions',
+                    component: SuggestedGames,
+                },
+            },
         },
         '/profile': {
             name: 'profile',
@@ -31,6 +51,12 @@ export function configRouter(router) {
         '/user-profile': {
             name: 'userProfile',
             component: UserProfile,
+            subRoutes: {
+                '/manage': {
+                    name: 'manageProfile',
+                    component: EditProfile,
+                },
+            },
         },
         '*': {
             component: NotFound,

@@ -43,6 +43,7 @@
 
     .home-page {
         > .hero {
+            margin-top: - $spacing-vert;
             height: 400px;
             background-color: $blue;
         }

@@ -1,7 +1,7 @@
 <template>
     <div class="context-menu">
 
-        <span v-for="page in subPages" :class="{ active: page.opened}" @click="changePage(page)">{{ page.title }}</span>
+        <a class="link" v-for="page in subPages" v-link="{ name: page.name, exact: true, replace: true }">{{ page.title }}</a>
 
     </div>
 </template>
@@ -9,14 +9,6 @@
 <script>
     export default {
         props: ['subPages'],
-
-        methods: {
-            changePage(page) {
-                debug(page);
-                this.subPages.forEach(page => { page.opened = false; });
-                page.opened = true;
-            },
-        },
     };
 </script>
 
@@ -27,12 +19,13 @@
         @include clearfix;
         margin-bottom: 30px;
 
-        > span {
+        > .link {
             float: left;
             padding: 10px 20px;
             cursor: pointer;
             transition: $all-fast;
             border-bottom: 3px solid transparent;
+            color: $dark;
 
             &:hover {
                 border-bottom: 3px solid $gray-light;

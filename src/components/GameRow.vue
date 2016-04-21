@@ -1,6 +1,6 @@
 <template>
     <tbody class="game-body">
-        <tr class="game-row" @click="open">
+        <tr :class="['game-row', { opened: opened }]" @click="open">
             <td class="icon -{{ game.status | lowercase | stripSpaces }}">
                 <i class="fa"></i>
             </td>
@@ -54,6 +54,12 @@
         position: relative;
         background-color: $gray-lighter;
         cursor: pointer;
+        border-left: 4px solid transparent;
+        transition: $all-fast;
+
+        &.opened {
+            border-left: 4px solid $blue;
+        }
 
         > .icon {
             font-size: 1.6rem;

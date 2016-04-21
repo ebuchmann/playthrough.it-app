@@ -15,12 +15,20 @@
                 </span>
             </div>
 
-            <p>Collection settings</p>
-            <span @click="saveChanges('active', !collection.active)">{{ collection.active }} (active)</span><br />
-            <span @click="saveChanges('public', !collection.public)">{{ collection.public }} (public)</span><br />
-            <span @click="saveChanges('suggestions', !collection.suggestions)">{{ collection.suggestions }} (suggestions)</span>
+            <div class="row">
+                <p>Collection settings</p>
+                <div class="button-checkbox">
+                    <label>
+                        <input type="checkbox" @click="saveChanges('public', !collection.public)" checked="{{ collection.public }}" hidden />
+                        <span v-if="collection.public">This collection is currently public.</span>
+                        <span v-else>This collection is currently private.</span>
+                    </label>
+                </div>
+            </div>
 
-            <button @click="doRemoveCollection()">Remove Collection</button>
+            <div class="row">
+                <button @click="doRemoveCollection()">Remove Collection</button>
+            </div>
 
         </div>
     </div>
@@ -78,7 +86,6 @@
 
     .button-checkbox {
         float: left;
-        width: 120px;
         margin-bottom: 15px;
 
         > label {

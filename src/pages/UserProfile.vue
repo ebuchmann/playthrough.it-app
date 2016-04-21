@@ -7,16 +7,20 @@
             </div>
             <div class="profile-right">
 
+
                 <context-menu :sub-pages.sync="subPages"></context-menu>
+
+                <router-view></router-view>
+
                 <h2 class="section-title">My collections <small>{{ collections.length }} of {{ currentUser.maxChallenges}} collections</small></h2>
 
                 <div class="row">
                     <template v-for="collection in collections">
-                        <div class="col-2">
+                        <div class="col-3">
                             <collection-card  :collection="collection"></collection-card>
                         </div>
                     </template>
-                    <div class="col-2" v-if="collections.length < currentUser.maxChallenges">
+                    <div class="col-3" v-if="collections.length < currentUser.maxChallenges">
                         <create-collection></create-collection>
                     </div>
                 </div>
@@ -68,8 +72,8 @@
         data() {
             return {
                 subPages: [
-                    { title: 'View Profile', opened: true },
-                    { title: 'Manage Profile', opened: false },
+                    { title: 'View Profile', name: 'userProfile' },
+                    { title: 'Manage Profile', name: 'manageProfile' },
                 ],
             };
         },
@@ -96,6 +100,7 @@
             data() {
                 return this.getUsersCollections(this.currentUser._id);
             },
+            canReuse: false,
         },
     };
 </script>

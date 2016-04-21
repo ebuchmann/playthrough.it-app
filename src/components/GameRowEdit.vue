@@ -1,46 +1,87 @@
 <template>
-    <tr class="edit-row">
+    <tr class="edit-row" :class="['edit-row', { opened: opened }]">
         <td colspan="100%">
             <div v-show="opened" transition="expand">
                 <div class="inner">
-                    <label>Status</label>
-                    <ul class="status-menu">
-                        <li class="status-button -finished {{ game.status === 'Finished' ? 'selected' : ''}}" @click="changeStatus('Finished')"></li>
-                        <li class="status-button -unfinished {{ game.status === 'Unfinished' ? 'selected' : ''}}" @click="changeStatus('Unfinished')"></li>
-                        <li class="status-button -abandoned {{ game.status === 'Abandoned' ? 'selected' : ''}}" @click="changeStatus('Abandoned')"></li>
-                        <li class="status-button -inprogress {{ game.status === 'In Progress' ? 'selected' : ''}}" @click="changeStatus('In Progress')"></li>
-                        <li class="status-button -upnext {{ game.status === 'Up Next' ? 'selected' : ''}}" @click="changeStatus('Up Next')"></li>
-                    </ul>
+                    <div class="col-1">
+                        <label>Status</label>
+                        <ul class="status-menu">
+                            <li class="status-button -finished {{ game.status === 'Finished' ? 'selected' : ''}}" @click="changeStatus('Finished')"></li>
+                            <li class="status-button -unfinished {{ game.status === 'Unfinished' ? 'selected' : ''}}" @click="changeStatus('Unfinished')"></li>
+                            <li class="status-button -abandoned {{ game.status === 'Abandoned' ? 'selected' : ''}}" @click="changeStatus('Abandoned')"></li>
+                            <li class="status-button -inprogress {{ game.status === 'In Progress' ? 'selected' : ''}}" @click="changeStatus('In Progress')"></li>
+                            <li class="status-button -upnext {{ game.status === 'Up Next' ? 'selected' : ''}}" @click="changeStatus('Up Next')"></li>
+                        </ul>
+                    </div>
 
-                    <label>Date</label>
-                    <date-picker :value.sync="completed_on"></date-picker>
+                    <div class="col-5">
 
-                    <label>Deaths</label>
-                    <input-box
-                        :value.sync="deaths"
-                        :event="updateItem"
-                        :id="game._id"
-                        type="deaths"
-                        >
-                    </input-box>
+                        <date-picker :value.sync="completed_on"></date-picker>
 
-                    <label>Time</label>
-                    <input-box
-                        :value.sync="time"
-                        :event="updateItem"
-                        :id="game._id"
-                        type="time"
-                        >
-                    </input-box>
+                        <input-box
+                            :value.sync="deaths"
+                            :event="updateItem"
+                            :id="game._id"
+                            style="side-input"
+                            label="Deaths"
+                            property="deaths"
+                            type="text"
+                            >
+                        </input-box>
 
-                    <label>Rating</label>
-                    <input-box
-                        :value.sync="rating"
-                        :event="updateItem"
-                        :id="game._id"
-                        type="rating"
-                        >
-                    </input-box>
+
+
+                        <input-box
+                            :value.sync="time"
+                            :event="updateItem"
+                            :id="game._id"
+                            style="side-input"
+                            label="Time"
+                            property="time"
+                            type="text"
+                            >
+                        </input-box>
+
+
+
+                        <input-box
+                            :value.sync="rating"
+                            :event="updateItem"
+                            :id="game._id"
+                            style="side-input"
+                            label="Rating"
+                            property="rating"
+                            type="text"
+                            >
+                        </input-box>
+
+                    </div>
+
+                    <div class="col-6-last">
+
+                        <input-box
+                            :value.sync="winning"
+                            :event="updateItem"
+                            :id="game._id"
+                            style="stacked-input"
+                            label="Winning Condition"
+                            property="winning"
+                            type="textarea"
+                            >
+                        </input-box>
+
+                        <input-box
+                            :value.sync="comment"
+                            :event="updateItem"
+                            :id="game._id"
+                            style="stacked-input"
+                            label="Comment"
+                            property="comment"
+                            type="textarea"
+                            >
+                        </input-box>
+
+                    </div>
 
                     <i class="fa fa-times-circle dodelete" @click="doDelete"></i>
 
@@ -68,6 +109,8 @@
             return {
                 rating: this.game.rating,
                 deaths: this.game.deaths,
+                comment: this.game.comment,
+                winning: this.game.winning,
                 time: numeral(this.game.time).format('00:00:00'),
                 isDeleting: false,
                 completed_on: this.game.completed_on,
@@ -128,16 +171,33 @@
 <style lang="sass">
     @import '../css/includes';
 
+    .col-1 {
+        @include span(1 of 12);
+    }
+    .col-5 {
+        @include span(5 of 12);
+    }
+    .col-6-last {
+        @include span(6 of 12 last);
+    }
+
     .edit-row {
         border-top: 1px solid $gray-light;
+        border-left: 4px solid transparent;
+        transition: $all-fast;
+
+        &.opened {
+            border-left: 4px solid rgba($blue, .25);
+        }
 
         > td {
             padding: 0;
         }
 
         .inner {
-            padding: 10px;
+            padding: 20px;
             position: relative;
+            @include clearfix;
         }
     }
 
@@ -152,7 +212,7 @@
         > li {
             line-height: 40px;
             color: $dark;
-            display: inline-block;
+            display: block;
             cursor: pointer;
             background: #fff;
             width: 40px;
@@ -162,7 +222,10 @@
         > .status-button {
             opacity: .55;
             border: 3px solid transparent;
+            border-radius: 3px;
             transition: $all-medium;
+            margin-bottom: 5px;
+            border: 2px solid transparent;
 
             &:hover {
                 opacity: 1;
@@ -223,12 +286,10 @@
 
     /* always present */
     .expand-transition {
-        background-color: #eee;
+        background-color: #fff;
         overflow: hidden;
         max-height: 2000px;
         transition: all .3s cubic-bezier(0.5, 0, 1, 0);
-        box-shadow: inset 0px 11px 8px -10px $gray-light,
-                    inset 0px -11px 8px -10px $gray-light;
     }
 
     /* .expand-enter defines the starting state for entering */

@@ -1,20 +1,20 @@
 .top-nav {
-    background: #fff;
+    margin-bottom: $spacing-vert;
 
     > .link {
         display: inline-block;
-        padding: 20px 0;
+        padding: 6px 0;
 
         > .logo {
             float: left;
-            width: 280px;
+            width: 310px;
         }
     }
 }
 
 .top-links {
     float: right;
-    padding: 22px 0;
+    padding: 10px 0;
 
     > a {
         padding: 10px;
@@ -24,10 +24,21 @@
     }
 }
 
+$nav-height: 70px;
+
+body {
+    margin-top: $nav-height + 30px;
+}
+
 .top-nav-wrapper {
     background-color: #fff;
     box-shadow: $light-shadow;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    height: $nav-height;
+    z-index: 999;
+    top: 0;
+    transition: $all-fast;
 
     &::before {
         content: '';
@@ -60,7 +71,7 @@
     position: relative;
     z-index: 100;
 
-    .button {
+    .menu {
         border-bottom: 1px dotted $blue;
 
         &:hover {

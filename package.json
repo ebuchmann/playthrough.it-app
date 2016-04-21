@@ -12,7 +12,7 @@
     "axios": "^0.9.1",
     "numeraljs": "^1.5.6",
     "pikaday": "^1.4.0",
-    "vue": "^1.0.20",
+    "vue": "^1.0.21",
     "vue-router": "^0.7.11",
     "vuex": "^0.6.2",
     "vuex-router-sync": "^1.0.0"

@@ -4,7 +4,7 @@
         <login-modal></login-modal>
         <popup-notification></popup-notification>
 
-        <div class="top-nav-wrapper">
+        <div :class="['top-nav-wrapper', { small: smallHeader }]">
             <div class="container">
                 <nav class="top-nav">
                     <a class="link" v-link="'/'">
@@ -15,7 +15,7 @@
                         <a v-link="{ name: 'home' }">Home</a>
                         <a v-link="{ name: 'collections' }">Collections</a>
                         <click-menu v-if="currentUser" class="user-link">
-                            <span slot="menu" class="button"> {{ currentUser.username }}</span>
+                            <span slot="menu" class="menu"> {{ currentUser.username }}</span>
                             <div slot="content" class="top-menu-dropdown">
                                 <a v-link="{ name: 'collections' }">Collections</a>
                                 <a v-link="{ name: 'profile' }">Profile</a>
@@ -63,6 +63,12 @@
             PopupNotification,
         },
 
+        data() {
+            return {
+                smallHeader: false,
+            };
+        },
+
         methods: {
             close() {
                 this.$broadcast('hide::dropdown');
@@ -77,10 +83,6 @@
 
 <style lang="sass">
     @import './src/css/app';
-
-    #app {
-        height: 100%;
-    }
 
     footer {
         min-height: 50px;

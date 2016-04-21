@@ -4,7 +4,6 @@ import {
     ADD_GAME,
     REMOVE_GAME,
 } from '../mutation-types';
-// import Vue from 'vue';
 
 export const state = {
     items: [],
@@ -16,11 +15,16 @@ export const mutations = {
     },
 
     [UPDATE_ITEM](state, listItem) {
-        delete listItem.game;
         const foundGame = state.items.find(item => item._id === listItem._id);
+        delete listItem.game;
+        const index = state.items.indexOf(foundGame);
+        // state.items.$set(index, listItem);
+        // vm.$set(state.items[index], listItem);
+        // foundGame.set('deaths', 300);
+        // foundGame = Object.assign({}, listItem);
         for (const key in listItem) {
             if (listItem.hasOwnProperty(key)) {
-                state.items[state.items.indexOf(foundGame)][key] = listItem[key];
+                state.items[index][key] = listItem[key];
             }
         }
     },
@@ -31,9 +35,7 @@ export const mutations = {
 
     [REMOVE_GAME](state, gameId) {
         const foundGame = state.items.find(game => game._id === gameId);
-        if (foundGame) {
-            state.items.splice(state.items.indexOf(foundGame), 1);
-        }
+        if (foundGame) state.items.$remove(foundGame);
     },
 };
 

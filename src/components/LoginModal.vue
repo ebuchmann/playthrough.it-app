@@ -2,6 +2,7 @@
     <div>
         <general-modal :show.sync="activeLogin" :width="'500px'">
             <div class="login-modal">
+                <div :class="['busy', { active: loggingIn }]"></div>
                 <i class="close fa fa-times" @click="toggle"></i>
                 <p class="logintext">Log In</p>
 
@@ -27,6 +28,7 @@
         data() {
             return {
                 activeLogin: false,
+                loggingIn: false,
             };
         },
 
@@ -46,6 +48,7 @@
             },
 
             doLogin(type) {
+                this.loggingIn = true;
                 const popup = window.open(`http://localhost:3033/auth/${type}`, 'Login to PlayThrough.it', 'scrollbars=yes,width=650,height=500');
 
                 this._oauthInterval = window.setInterval(() => {
@@ -53,7 +56,8 @@
                         window.clearInterval(this._oauthInterval);
 
                         this.getCurrentUser();
-                        this.toggle();
+                        this.loggingIn = false;
+                        this.activeLogin = false;
                     }
                 }, 200);
             },
@@ -99,6 +103,22 @@
                 margin-bottom: 0;
             }
         }
+
+        > .busy {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 0;
+            left: 0;
+            background: none;
+            transition: background .2s ease-in;
+
+            &.active {
+                width: 100%;
+                height: 100%;
+                background: rgba($gray, .45);
+            }
+        }
     }
 
     .login-buttons {
@@ -109,7 +129,7 @@
             color: #fff;
             font-family: FontAwesome;
             font-size: 4rem;
-            padding-top: 16px;
+            padding: 16px 0 0 0;
             text-indent: 18px;
             cursor: pointer;
             box-shadow: $light-shadow;

@@ -1,6 +1,7 @@
 <template>
-    <div class="date-picker input-box">
-        <input type="text" v-model="value" :id="random" />
+    <div class="date-picker input-box side-input">
+        <label class="label">Date</label>
+        <input class="input" type="text" v-model="value" :id="random" />
         <span class="validation"></span>
     </div>
 </template>

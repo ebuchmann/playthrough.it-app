@@ -1,30 +1,50 @@
 <template>
-    <span class="input-box">
-        <input type="text" v-model="value" @change="doSave" @click="clearClass"/>
+    <span :class="['input-box', style]">
+        <label v-el:label class="label">{{ label }}</label>
+        <template v-if="type === 'text'">
+            <input v-el:input v-if="editing" class="input" type="text" v-model="value" v-on:blur="editing = !editing" @change="doSave" @click="clearClass"/>
+            <span class="editable" v-else @click="startEditing()">{{ value }}</span>
+        </template>
+        <template v-if="type === 'textarea'">
+            <textarea v-el:input v-if="editing" class="input" v-model="value" v-on:blur="editing = !editing" @change="doSave" @click="clearClass"></textarea>
+            <div class="editable" v-else @click="startEditing()">{{ value }}</div>
+        </template>
         <span class="validation"></span>
     </span>
 </template>
 
 <script>
     export default {
-        props: ['value', 'event', 'type', 'id', 'filter'],
+        props: ['value', 'event', 'type', 'id', 'filter', 'label', 'style', 'property'],
+
+        data() {
+            return {
+                editing: false,
+            };
+        },
 
         methods: {
             doSave() {
-                const input = this.$el.children[0];
-                input.disabled = true;
-                this.event(this.id, { [this.type]: this.value }).then(() => {
-                    input.disabled = false;
-                    input.classList.add('success');
+                this.$els.input.disabled = true;
+                this.event(this.id, { [this.property]: this.value }).then(() => {
+                    this.$els.input.disabled = false;
+                    this.editing = false;
+                    this.$els.label.classList.add('success');
                     setTimeout(() => {
-                        input.classList.remove('success');
+                        this.$els.label.classList.remove('success');
                     }, 5000);
                 });
             },
 
             clearClass() {
-                const input = this.$el.children[0];
-                input.classList.remove('success');
+                this.$els.input.classList.remove('success');
+            },
+
+            startEditing() {
+                this.editing = true;
+                setTimeout(() => {
+                    this.$els.input.focus();
+                }, 20);
             },
         },
     };
@@ -36,16 +56,7 @@
     .input-box {
         position: relative;
         display: inline-block;
-
-        > input {
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid $gray-dark;
-
-            &:focus, &:active {
-                border-color: rgba($blue, .5);
-            }
-        }
+        width: 100%;
 
         > input[disabled] {
             border-color: $yellow;

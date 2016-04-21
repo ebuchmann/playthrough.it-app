@@ -5,24 +5,12 @@
             <img src="../assets/portrait.jpg" alt="{{ currentUser.username }}" />
         </div>
 
-        <p v-if="!editName" class="username canedit" @click="doEditName()">{{ currentUser.username }}</p>
-        <div v-else class="edit-name">
-            <input :value="currentUser.username" @keyup.enter="doSaveName" @keyup.esc="editName = !editName" />
-            <button>Cancel</button>
-            <button>Save</button>
-        </div>
+        <p class="username">{{ currentUser.username }}</p>
 
 
         <p><strong>Info</strong></p>
         <i class="fa fa-calendar"></i> Joined 3 days ago<br />
-        <span v-if="!editEmail" class="canedit" @click="doEditEmail()">
-            <i class="fa fa-envelope"></i> {{ currentUser.email }}<br /><br />
-        </span>
-        <div v-else class="edit-email">
-            <input :value="currentUser.email" @keyup.enter="doSaveEmail" @keyup.esc="editEmail = !editEmail" />
-            <button>Cancel</button>
-            <button>Save</button>
-        </div>
+        <p><i class="fa fa-envelope"></i> {{ currentUser.email }}</p>
 
         <hr />
 
@@ -74,35 +62,6 @@
                     }
                 }, 200);
             },
-
-            doEditName() {
-                this.editName = !this.editName;
-                setTimeout(() => {
-                    this.$el.querySelector('.edit-name > input').focus();
-                }, 30);
-            },
-
-            doEditEmail() {
-                this.editEmail = !this.editEmail;
-                setTimeout(() => {
-                    this.$el.querySelector('.edit-email > input').focus();
-                }, 30);
-            },
-
-            doSaveEmail() {
-                const email = this.$el.querySelector('.edit-email > input').value;
-                debug(`Saving email as ${email}`);
-                this.updateUser({ email });
-                this.editEmail = !this.editEmail;
-            },
-
-            doSaveName() {
-                const username = this.$el.querySelector('.edit-name > input').value;
-                debug(`Saving name as ${username}`);
-                this.updateUser({ username }).then(() => {
-                    this.editName = !this.editName;
-                });
-            },
         },
     };
 </script>
@@ -123,17 +82,6 @@
 
         > hr {
             margin: 0 0 - $padding;
-        }
-    }
-
-    .edit-name {
-
-        > input {
-            font-size: 2rem;
-            border: none;
-            border-bottom: 1px solid black;
-            width: 100%;
-            outline: none;
         }
     }
 
@@ -183,14 +131,6 @@
         }
         > .false {
             color: $gray-light;
-        }
-    }
-
-    .canedit {
-        cursor: pointer;
-
-        &:hover {
-            background-color: rgba($yellow, .1);
         }
     }
 </style>

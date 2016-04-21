@@ -1,0 +1,118 @@
+textarea {
+    height: 300px;
+}
+
+.side-input {
+    > .label {
+        margin: 0;
+        font-size: .8rem;
+        text-transform: uppercase;
+        width: 100px;
+        display: inline-block;
+        text-align: right;
+        padding-right: 20px;
+    }
+
+    > .input {
+
+    }
+}
+
+.stacked-input {
+    > .label {
+        display: block;
+        margin: 0;
+        font-size: .8rem;
+        text-transform: uppercase;
+    }
+
+    > .input {
+        width: 100%;
+    }
+}
+
+.side-input, .stacked-input {
+    > .label {
+        margin-bottom: 20px;
+    }
+
+    > .input {
+        font-size: 1rem;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid $gray-lighter;
+        transition: $all-fast;
+        font-weight: normal;
+
+        &:focus {
+            outline: none;
+            border-bottom: 1px solid $blue;
+        }
+    }
+
+    > .editable {
+        cursor: pointer;
+        border-bottom: 1px solid transparent;
+        transition: $all-fast;
+        min-width: 100px;
+        display: inline-block;
+
+        &:hover {
+            border-bottom: 1px solid $gray-lighter;
+        }
+    }
+}
+
+.input {
+    border: none;
+    border-bottom: 1px solid $gray-light;
+    font-size: 1rem;
+    transition: $all-fast;
+
+    &:focus {
+        outline: none;
+        border-bottom: 1px solid $blue;
+    }
+}
+
+.label {
+    cursor: pointer;
+
+    > .checkbox {
+        display: none;
+    }
+
+    > .span {
+        background: $gray-light;
+        width: 25px;
+        height: 25px;
+        display: inline-block;
+        transition: $all-fast;
+
+        &::after {
+            font-family: FontAwesome;
+            content: '\f00c';
+            color: $gray-lighter;
+            padding-left: 3px;
+            font-size: .9rem;
+        }
+    }
+
+    > .checkbox:checked + .span {
+        background-color: $blue;
+    }
+}
+
+.button {
+    border: none;
+    background-color: $blue;
+    color: #fff;
+    font-size: 1rem;
+    padding: 6px 15px;
+    cursor: pointer;
+    transition: $all-fast;
+
+    &:hover {
+        background-color: darken($blue, 5%);
+    }
+}
