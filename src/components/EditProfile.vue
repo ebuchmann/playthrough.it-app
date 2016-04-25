@@ -29,7 +29,7 @@
                 Profile Picture
             </div>
             <div class="r">
-                (uploader)
+                <profile-uploader :pic.sync="newPic" :remove-pic.sync="removePic"></profile-uploader>
             </div>
         </div>
 
@@ -58,7 +58,11 @@
 </template>
 
 <script>
+    import ProfileUploader from 'component/ProfileUploader';
     import { updateUser } from 'store/users/actions';
+
+    // import { pri } from '../api/api-config';
+    import axios from 'axios';
 
     export default {
         vuex: {
@@ -75,19 +79,37 @@
                 username: this.currentUser.username,
                 email: this.currentUser.email,
                 viewAds: this.currentUser.viewAds,
+                newPic: null,
+                removePic: false,
             };
+        },
+
+        components: {
+            ProfileUploader,
         },
 
         methods: {
             update() {
-                const data = {
-                    username: this.username,
-                    email: this.email,
-                    viewAds: this.viewAds,
+                const formData = new FormData();
+
+                formData.append('username', this.username);
+                formData.append('email', this.email);
+                formData.append('viewAds', this.viewAds);
+
+                if (this.newPic) formData.append('img', this.newPic);
+                else if (this.removePic) formData.append('img', this.removePic);
+
+                const opts = {
+                    transformRequest(formData) { return formData; },
+                    withCredentials: true,
                 };
 
-                debug(data);
-                this.updateUser(data);
+                axios.post('http://localhost:3033/tester', formData, opts);
+
+                // pri.patch('users/update', { attributes: {
+                //     pic: this.newPic,
+                // } });
+                // this.updateUser(formData);
             },
         },
     };

@@ -9,7 +9,7 @@
     "test": "karma start build/karma.conf.js --single-run"
   },
   "dependencies": {
-    "axios": "^0.9.1",
+    "axios": "^0.10.0",
     "numeraljs": "^1.5.6",
     "pikaday": "^1.4.0",
     "vue": "^1.0.21",

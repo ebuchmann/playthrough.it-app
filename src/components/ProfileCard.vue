@@ -2,7 +2,7 @@
     <div class="profile-card">
 
         <div class="profile-image">
-            <img src="../assets/portrait.jpg" alt="{{ currentUser.username }}" />
+            <img :src="currentUser.profilePic" alt="{{ currentUser.username }}" />
         </div>
 
         <p class="username">{{ currentUser.username }}</p>
