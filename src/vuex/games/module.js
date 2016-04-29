@@ -13,6 +13,8 @@ export const state = {
         { name: 'SMS', type: 'SMS' },
         { name: 'NES', type: 'NES' },
         { name: 'SNES', type: 'SNES' },
+        { name: 'GEN' },
+        { name: 'GB' },
     ],
     results: [],
 };

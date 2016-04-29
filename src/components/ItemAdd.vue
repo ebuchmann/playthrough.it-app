@@ -40,13 +40,15 @@
 </script>
 
 <style lang="sass">
+    @import '../css/includes';
 
     .game-list-add {
         background: #fff;
-        border: 5px solid lighten(#01afee, 30);
-        padding: 25px;
-        width: 100%;
+        box-shadow: $light-shadow;
         margin: 25px 0;
+        padding: 20px;
+        border-bottom: 3px solid $blue;
+        position: relative;
 
         > .text {
             text-align: center;

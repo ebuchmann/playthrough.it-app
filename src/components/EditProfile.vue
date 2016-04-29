@@ -1,11 +1,11 @@
 <template>
     <div class="edit-profile">
 
-        <div class="profile-row">
-            <div class="l">
+        <div class="row">
+            <div class="labels">
                 <label>Username</label>
             </div>
-            <div class="r">
+            <div class="inputs">
                 <template v-if="currentUser.canChangeName">
                     <input class="input" v-else v-model="username" />
                     <small class="extra">Your username can only be set one time, choose wisely!</small>
@@ -14,43 +14,43 @@
             </div>
         </div>
 
-        <div class="profile-row">
-            <div class="l">
+        <div class="row">
+            <div class="labels">
                 <label>Email</label>
             </div>
-            <div class="r">
+            <div class="inputs">
                 <input class="input" v-model="email" />
                 <small class="extra" v-if="email !== currentUser.email">We will verify your email if you change it!</small>
             </div>
         </div>
 
-        <div class="profile-row">
-            <div class="l">
+        <div class="row">
+            <div class="labels">
                 Profile Picture
             </div>
-            <div class="r">
+            <div class="inputs">
                 <profile-uploader :pic.sync="newPic" :remove-pic.sync="removePic"></profile-uploader>
             </div>
         </div>
 
-        <div class="profile-row">
-            <div class="l">
+        <div class="row">
+            <div class="labels">
                 <label>Advertisements</label>
             </div>
-            <div class="r">
+            <div class="inputs">
                 <label class="label">
                     <input class="checkbox" type="checkbox" v-model="viewAds" />
                     <span class="span"></span>
-                    {{ viewAds }}
                 </label>
                 <small class="extra">Advertisements help pay for hosting and other fees releated to keeping this site running.</small>
             </div>
         </div>
 
-        <div class="profile-row">
-            <div class="l"></div>
-            <div class="r">
+        <div class="row">
+            <div class="labels"></div>
+            <div class="inputs">
                 <button class="button" @click="update">Save</button>
+                <button class="button cancel">Cancel</button>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
     import { updateUser } from 'store/users/actions';
 
     // import { pri } from '../api/api-config';
-    import axios from 'axios';
+    // import axios from 'axios';
 
     export default {
         vuex: {
@@ -99,17 +99,7 @@
                 if (this.newPic) formData.append('img', this.newPic);
                 else if (this.removePic) formData.append('img', this.removePic);
 
-                const opts = {
-                    transformRequest(formData) { return formData; },
-                    withCredentials: true,
-                };
-
-                axios.post('http://localhost:3033/tester', formData, opts);
-
-                // pri.patch('users/update', { attributes: {
-                //     pic: this.newPic,
-                // } });
-                // this.updateUser(formData);
+                this.updateUser(formData);
             },
         },
     };
@@ -124,24 +114,5 @@
         margin: 25px 0;
         padding: 20px;
         border-bottom: 3px solid $blue;
-    }
-
-    .profile-row {
-        @include clearfix;
-        padding-bottom: 25px;
-
-        > .l {
-            @include span(2 of 12);
-        }
-        > .r {
-            @include span(10 of 12 last);
-            padding-left: 20px;
-            border-left: 1px solid $gray-light;
-
-            > .extra {
-                color: $gray-light;
-                display: block;
-            }
-        }
     }
 </style>

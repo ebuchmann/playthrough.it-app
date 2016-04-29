@@ -27,7 +27,7 @@ export default {
 
     // Updates a collection
     updateCollection(id, attributes) {
-        return pub.patch(`collections/${id}`, {
+        return pri.patch(`collections/${id}`, {
             attributes,
         });
     },

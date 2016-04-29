@@ -69,14 +69,14 @@
                 content: '\F0D7';
                 font-family: FontAwesome;
                 padding-left: 5px;
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
         }
 
         > .filters {
             position: absolute;
             left: 0;
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             list-style: none;
             text-align: left;
             background-color: #fff;

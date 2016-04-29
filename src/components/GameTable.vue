@@ -4,10 +4,7 @@
             <table class="game-table">
                 <thead>
                     <tr>
-                        <th @click="changeOrder('status')" :class="{sort: orderBy === 'status'}">
-                            <span :class="direction > 0 ? 'asc' : 'desc'"></span>
-                        </th>
-                        <th v-for="value in possibleDisplay" v-if="collection.display[value.display]" @click="changeOrder(value.filter)" :class="{sort: orderBy === value.filter}">
+                        <th v-for="value in possibleDisplay" v-if="collection.display[value.display] || value.visible" @click="changeOrder(value.filter)" :class="{ sort: orderBy === value.filter }">
                             {{{ value.display | capitalize }}}
                             <span :class="direction > 0 ? 'asc' : 'desc'"></span>
                         </th>
@@ -45,7 +42,8 @@
                 direction: 1,
                 max: 50,
                 possibleDisplay: [
-                    { filter: 'game.title', display: 'title' },
+                    { filter: 'status', display: null, visible: true },
+                    { filter: 'game.title', display: 'title', visible: true },
                     { filter: 'game.platform', display: 'platform' },
                     { filter: 'game.genres', display: 'genres' },
                     { filter: 'time', display: 'time' },

@@ -5,6 +5,7 @@ import { configRouter } from './route-config';
 import App from './App';
 import numeral from 'numeraljs';
 import { getCurrentUser } from 'store/users/actions';
+import marked from 'marked';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -40,6 +41,8 @@ Vue.filter('time', {
         return numeral(value).format('0');
     },
 });
+
+Vue.filter('marked', value => value ? marked(value) : '');
 
 // Sets up router sync
 import { sync } from 'vuex-router-sync';

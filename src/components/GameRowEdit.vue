@@ -14,7 +14,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-5">
+                    <div class="col-4">
 
                         <date-picker :value.sync="completed_on"></date-picker>
 
@@ -57,7 +57,7 @@
 
                     </div>
 
-                    <div class="col-6-last">
+                    <div class="col-7-last">
 
                         <input-box
                             :value.sync="winning"
@@ -83,7 +83,9 @@
 
                     </div>
 
-                    <i class="fa fa-times-circle dodelete" @click="doDelete"></i>
+                    <span class="remove-button" @click="doDelete()">
+                        <i class="fa fa-trash"></i> Remove Game
+                    </span>
 
                     <div class="is-deleting" v-show="isDeleting">
                         Are you sure you want to delete this?<br />
@@ -174,11 +176,11 @@
     .col-1 {
         @include span(1 of 12);
     }
-    .col-5 {
-        @include span(5 of 12);
+    .col-4 {
+        @include span(4 of 12);
     }
-    .col-6-last {
-        @include span(6 of 12 last);
+    .col-7-last {
+        @include span(7 of 12 last);
     }
 
     .edit-row {

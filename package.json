@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.10.0",
+    "marked": "^0.3.5",
     "numeraljs": "^1.5.6",
     "pikaday": "^1.4.0",
     "vue": "^1.0.21",

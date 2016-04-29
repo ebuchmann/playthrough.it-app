@@ -2,12 +2,11 @@
     <span :class="['input-box', style]">
         <label v-el:label class="label">{{ label }}</label>
         <template v-if="type === 'text'">
-            <input v-el:input v-if="editing" class="input" type="text" v-model="value" v-on:blur="editing = !editing" @change="doSave" @click="clearClass"/>
-            <span class="editable" v-else @click="startEditing()">{{ value }}</span>
+            <input v-el:input class="input" type="text" v-model="value" @change="doSave" @click="clearClass"/>
         </template>
         <template v-if="type === 'textarea'">
             <textarea v-el:input v-if="editing" class="input" v-model="value" v-on:blur="editing = !editing" @change="doSave" @click="clearClass"></textarea>
-            <div class="editable" v-else @click="startEditing()">{{ value }}</div>
+            <div class="editable" v-else @click="startEditing()" v-html="value | marked"></div>
         </template>
         <span class="validation"></span>
     </span>
@@ -27,12 +26,14 @@
             doSave() {
                 this.$els.input.disabled = true;
                 this.event(this.id, { [this.property]: this.value }).then(() => {
-                    this.$els.input.disabled = false;
-                    this.editing = false;
-                    this.$els.label.classList.add('success');
-                    setTimeout(() => {
-                        this.$els.label.classList.remove('success');
-                    }, 5000);
+                    if (this.$els.input) {
+                        this.$els.input.disabled = false;
+                        this.editing = false;
+                        this.$els.input.classList.add('success');
+                        setTimeout(() => {
+                            this.$els.input.classList.remove('success');
+                        }, 5000);
+                    }
                 });
             },
 

@@ -1,16 +1,18 @@
 <template>
-    <div class="profile-uploader">
+    <div>
+        <div class="profile-uploader">
 
-        <div v-el:pic class="image">
-            <img v-el:real class="realimg" />
-            <input class="uploader" v-el:input type="file" @change="setImage()" />
+            <div v-el:pic class="image">
+                <img v-el:real class="realimg" />
+                <input class="uploader" v-el:input type="file" @change="setImage()" />
+            </div>
+
+            <button class="action" @click="removeImage()">Remove</button>
+            <button class="action" @click="chooseImage()">Select</button>
+
+
         </div>
-
-        <button class="action" @click="removeImage()">Remove</button>
-        <button class="action" @click="chooseImage()">Select</button>
-
-        <small class="extra" v-if="removePic">Clicking save will remove your current profile picture. <span @click="cancelRemove()">Cancel this.</span> </small>
-
+        <small class="extra" v-if="removePic">Clicking save will remove your current profile picture. <span class="cancel" @click="cancelRemove()">Cancel this.</span> </small>
     </div>
 </template>
 
@@ -128,5 +130,11 @@
                 opacity: 0;
             }
         }
+    }
+
+    .extra > .cancel {
+        cursor: pointer;
+        color: $dark;
+        text-decoration: underline;
     }
 </style>

@@ -125,7 +125,7 @@
         background: #fff;
         border: gray;
         list-style: none;
-        font-size: 2rem;
+        font-size: 1.65rem;
         width: 100%;
         text-align: left;
         margin: 0;
