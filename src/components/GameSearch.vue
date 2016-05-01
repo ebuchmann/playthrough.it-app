@@ -5,15 +5,15 @@
             @click="open"
             @keyup.down="moveSelected(1)"
             @keyup.up="moveSelected(-1)"
-            @keyup="doSearch"
+            @keyup="doSearch | debounce 500"
             @keyup.enter="doAddGame" />
 
         <ul class="search-list" v-show="opened">
-            <li v-for="game in list"
+            <li v-for="game in boldList"
                 class="{{$index === selected ? 'selected' : ''}}"
                 @mouseover="selected = $index"
                 @click="doAddGame">
-                {{ game.title }}
+                {{{ game.title }}}
                 <template v-if="filter.type === '*'"> - {{ game.platform }}</template>
             </li>
         </ul>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import { gameSearch } from 'store/games/actions';
+    import { gameSearch, clearSearch } from 'store/games/actions';
 
     export default {
         props: ['game', 'action'],
@@ -43,6 +43,22 @@
             },
             actions: {
                 gameSearch,
+                clearSearch,
+            },
+        },
+
+        computed: {
+            boldList() {
+                return this.list.map(item => {
+                    const match = this.text.length
+                        ? item.title.replace(new RegExp(`(^|)(${this.text})(|$)`, 'i'), '$1<strong>$2</strong>$3')
+                        : item.title;
+                    return {
+                        _id: item._id,
+                        platform: item.platform,
+                        title: match,
+                    };
+                });
             },
         },
 
@@ -51,6 +67,7 @@
                 if (this.list.length) {
                     this.action(this.list[this.selected]);
                     this.text = '';
+                    this.clearSearch();
                 }
             },
 

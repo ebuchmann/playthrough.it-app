@@ -1,9 +1,25 @@
 <template>
     <div class="game-list-add">
+        <div class="row">
+            <div class="leftside">
+                <label>Game search</label>
+                <game-search :action="doAddGame"></game-search>
 
-        <p class="text">
-            I want to add&nbsp;<game-search :action="doAddGame"></game-search>&nbsp;on&nbsp;<platform-filter></platform-filter>
-        </p>
+                <div class="recent-area" v-if="recent.length">
+                    <p>Recently added games...</p>
+                    <ul class="recent-list">
+                        <li v-for="item in recent" class="item">
+                            <i class="fa fa-plus"></i> {{ item.game.title }} - <span class="undo" @click="doRemoveGame(item)"><i class="fa fa-trash"></i> undo</span>
+                         </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="rightside">
+                <label>Filters</label>
+                <platform-filter></platform-filter>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -11,7 +27,7 @@
 <script>
     import GameSearch from 'component/GameSearch';
     import PlatformFilter from 'component/PlatformFilter';
-    import { addGame } from 'store/items/actions';
+    import { addGame, removeGame } from 'store/items/actions';
     import { sendEvent } from 'store/events/actions';
 
     export default {
@@ -19,16 +35,31 @@
             actions: {
                 addGame,
                 sendEvent,
+                removeGame,
             },
             getters: {
                 collectionId: ({ route }) => route.params.collectionId,
             },
         },
 
+        data() {
+            return {
+                recent: [],
+            };
+        },
+
         methods: {
             doAddGame(game) {
-                this.addGame(this.collectionId, game._id);
-                this.sendEvent({ type: 'success', message: `${game.title} added!` });
+                this.addGame(this.collectionId, game._id).then(game => {
+                    if (this.recent.length >= 5) this.recent.pop();
+                    this.recent.unshift(game);
+                });
+            },
+
+            doRemoveGame(game) {
+                this.removeGame(game).then(() => {
+                    this.recent.$remove(game);
+                });
             },
         },
 
@@ -50,14 +81,22 @@
         border-bottom: 3px solid $blue;
         position: relative;
 
-        > .text {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 0;
+        > .row > .leftside {
+            @include span(8 of 12);
+        }
 
-            > .input {
-                border: none;
-                border-bottom: 2px solid black;
+        > .row > .rightside {
+            @include span(4 of 12 last);
+        }
+    }
+
+    .recent-list {
+        list-style: none;
+
+        > .item {
+            > .undo {
+                cursor: pointer;
+                color: $gray-light;
             }
         }
     }

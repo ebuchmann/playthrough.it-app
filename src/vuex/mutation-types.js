@@ -1,6 +1,7 @@
 // Games Module
 export const CHANGE_FILTER = 'CHANGE_FILTER';
 export const GAME_SEARCH = 'GAME_SEARCH';
+export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 // User Module
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
@@ -8,7 +9,7 @@ export const LOG_OUT = 'LOG_OUT';
 export const CHANGE_BANNER = 'CHANGE_BANNER';
 export const UPDATE_USER = 'UPDATE_USER';
 
-// Challenge Module
+// Collection Module
 export const ADD_COLLECTION = 'ADD_COLLECTION';
 export const GET_ALL_COLLECTIONS = 'GET_ALL_COLLECTIONS';
 export const GET_COLLECTION = 'GET_COLLECTION';

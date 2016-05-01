@@ -4,7 +4,7 @@ export default {
     // Adds a game to a collection
     // TODO: swap the api call to call items instead of Collections
     addGame(collectionId, gameId) {
-        return pub.post(`collections/${collectionId}/games/${gameId}`);
+        return pri.post(`collections/${collectionId}/games/${gameId}`);
     },
 
     // Get a collections items

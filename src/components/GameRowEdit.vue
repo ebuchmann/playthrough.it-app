@@ -146,8 +146,7 @@
             doDelete() {
                 if (!this.isDeleting) this.isDeleting = !this.isDeleting;
                 else {
-                    const completed = this.game.status === 'Finished' ? -1 : 0;
-                    this.removeGame(this.game._id, this.collectionId, completed);
+                    this.removeGame(this.game);
                 }
             },
         },
