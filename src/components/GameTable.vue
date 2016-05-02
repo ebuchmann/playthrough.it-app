@@ -15,7 +15,9 @@
             <span @click="showMore()">Show more...</span>
         </template>
         <div v-else>
-            <p>No games, add some!</p>
+            <div class="no-games">
+                <p class="message">This collection is empty, <a v-link="{ name: 'addGames' }">add some games!</a></p>
+            </div>
         </div>
     </div>
 </template>
@@ -155,6 +157,22 @@
         opacity: 0;
         height: 0;
         border-color: $green;
+    }
+
+    .no-games {
+        width: 100%;
+        border: 1px solid $gray-light;
+        padding: 40px;
+        border-radius: 4px;
+        display: table;
+        background-color: $gray-lighter;
+
+        > .message {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 1.5rem;
+        }
     }
 
 </style>

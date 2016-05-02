@@ -1,11 +1,11 @@
 <template>
     <div class="create-collection">
-        <div class="before-adding" :class="{ 'during-adding': opened }" @click="openMenu">
+        <div :class="['before-adding', { 'during-adding': opened }]" @click="openMenu">
             <p v-if="!opened" class="before">Create a new collection</p>
             <div class="opened-container" v-show="opened">
-                <input id="collection" class="collection-input" v-el:input v-model="name" placeholder="Name your collection" @keyup.enter="saveCollection" autocomplete="off" /><br />
-                <button class="button cancel" @click.stop="cancelCollection"></button>
-                <button class="button" @click.stop="saveCollection">Save it</button>
+                <input class="collection-input" v-el:input v-model="name" placeholder="Name your collection..." @keyup.enter="saveCollection" autocomplete="off" />
+                <button class="button" @click.stop="saveCollection">Save</button>
+                <button class="button cancel" @click.stop="cancelCollection">Cancel</button>
             </div>
         </div>
     </div>
@@ -60,20 +60,23 @@
     @import '../css/includes';
 
     .create-collection {
-        margin-top: 30px;
+        margin: 15px 0;
         height: 200px;
+        border-bottom: 2px solid $blue;
     }
 
     .before-adding {
         cursor: pointer;
         height: 100%;
-        display: flex;
-        align-items: center;
+        width: 100%;
+        display: table;
         border: 2px dashed $blue-dark;
         transition: $all-fast;
         background-color: transparent;
 
         > .before {
+            display: table-cell;
+            vertical-align: middle;
             text-align: center;
             color: $blue;
             font-weight: bold;
@@ -94,21 +97,24 @@
     }
 
     .opened-container {
-        width: 100%;
-        position: relative;
-        height: 100%;
-        display: flex;
-        align-items: center;
+        padding: 30px;
+        display: table-cell;
+        vertical-align: middle;
+
+        > .button {
+            float: right;
+            margin-left: 15px;
+        }
     }
 
     .collection-input {
-        width: 80%;
         margin: 0 auto;
         border: none;
         border-bottom: 2px solid $blue-dark;
         display: block;
         font-size: 1.5rem;
         transition: $all-fast;
+        margin-bottom: 25px;
 
         &:focus {
             border-color: $blue;
