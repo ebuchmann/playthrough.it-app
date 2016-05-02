@@ -9,8 +9,8 @@
                     <p>Recently added games...</p>
                     <ul class="recent-list">
                         <li v-for="item in recent" class="item">
-                            <i class="fa fa-plus"></i> {{ item.game.title }} - <span class="undo" @click="doRemoveGame(item)"><i class="fa fa-trash"></i> undo</span>
-                         </li>
+                            Added: {{ item.game.title }} - <span class="undo" @click="doRemoveGame(item)"><i class="fa fa-trash"></i> Undo</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -83,6 +83,10 @@
 
         > .row > .leftside {
             @include span(8 of 12);
+
+            > label {
+                display: block;
+            }
         }
 
         > .row > .rightside {
@@ -97,6 +101,11 @@
             > .undo {
                 cursor: pointer;
                 color: $gray-light;
+                transition: $all-fast;
+
+                &:hover {
+                    color: $gray;
+                }
             }
         }
     }

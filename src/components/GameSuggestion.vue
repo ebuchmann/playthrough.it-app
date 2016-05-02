@@ -3,7 +3,7 @@
         <div class="top">
             <i class="fa fa-comments-o"></i>
         </div>
-        <div class="button" @click="openSuggestion">
+        <div class="btn" @click="openSuggestion">
             Suggest a game
         </div>
         <div :class="['suggestion-area', { opened: suggesting }]">
@@ -85,7 +85,7 @@
             }
         }
 
-        > .button {
+        > .btn {
             background-color: #fff;
             padding: 20px;
             text-align: center;

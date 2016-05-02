@@ -2,6 +2,7 @@
     <span class="game-search">
 
         <input v-model="text"
+            placeholder="Type to search..."
             @click="open"
             @keyup.down="moveSelected(1)"
             @keyup.up="moveSelected(-1)"
@@ -123,12 +124,13 @@
 
         > input {
             border: none;
-            border-bottom: 2px solid #222;
+            border-bottom: 2px solid $blue-dark;
             width: 500px;
-            font-size: 1.7rem;
+            font-size: 1.5rem;
             color: $blue-dark;
             line-height: 2rem;
             transition: $all-fast;
+            padding-bottom: 1px;
 
             &:focus, &:active {
                 border-bottom: 2px solid $blue;

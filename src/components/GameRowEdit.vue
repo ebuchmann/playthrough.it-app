@@ -88,8 +88,8 @@
                     </span>
 
                     <div class="is-deleting" v-show="isDeleting">
-                        Are you sure you want to delete this?<br />
-                        <span @click="doDelete">Yes, delete this</span> | <span @click="isDeleting = false">No, don't delete this</span>
+                        <p>Are you sure you want to delete this?</p>
+                        <button class="button" @click="doDelete">Remove</button> <button class="button cancel" @click="isDeleting = false">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -265,18 +265,17 @@
     .is-deleting {
         z-index: 100;
         position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($red, .9);
-        top: 0;
-        left: 0;
-        font-size: 2rem;
-        color: #fff;
+        width: 300px;
+        top: 10px;
+        right: 10px;
         text-align: center;
         padding: 20px;
+        background: #fff;
+        border: 1px solid $gray-light;
+        border-radius: 2px;
+        box-shadow: $light-shadow;
 
         > span {
-            font-size: 1.5rem;
             cursor: pointer;
 
             &:hover {

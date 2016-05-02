@@ -1,19 +1,19 @@
 <template>
-    <span class="platform-filter {{opened ? 'opened' : ''}}">
-        <span class="current" @click="open">
+    <div class="platform-filter {{opened ? 'opened' : ''}}" @click.stop>
+        <div class="current" @click="open">
             {{ currentFilter.name }}
-        </span>
-        <div class="filter-list {{opened ? 'opened' : ''}}">
-            <input class="filterinput" type="text" v-el:input v-model="filter"placeholder="Search" @click.prevent.stop />
+        </div>
+        <div class="filtered-list {{opened ? 'opened' : ''}}">
+            <input class="filterinput" type="text" v-el:input v-model="filter"placeholder="Type to search..." />
             <ul class="filters">
                 <li class="item {{filter.name === currentFilter.name ? 'selected' : ''}}"
                 v-for="filter in filteredList"
-                @click="changeFilter(filter.type)">
+                @click="selectItem(filter.type)">
                 {{ filter.name }}
             </li>
         </ul>
         </div>
-    </span>
+    </div>
 </template>
 
 <script>
@@ -45,10 +45,16 @@
 
         methods: {
             open() {
-                setTimeout(() => {
-                    this.opened = true;
+                this.opened = true;
+                this.$nextTick(() => {
                     this.$els.input.focus();
-                }, 15);
+                });
+            },
+
+            selectItem(item) {
+                this.changeFilter(item);
+                this.opened = false;
+                this.filter = '';
             },
         },
 
@@ -80,40 +86,38 @@
                 content: '\F0D7';
                 font-family: FontAwesome;
                 padding-left: 5px;
-                font-size: 1.75rem;
+                right: 0;
+                position: absolute;
             }
         }
     }
 
-    .filter-list {
-        max-height:0;
-        overflow:hidden;
-        position: absolute;
-        left: 0;
+    .filtered-list {
+        margin-top: 2px;
         background-color: #fff;
         border: 1px solid #eceeef;
         border-bottom: 2px solid $blue;
         width: 100%;
         z-index: 101;
         min-width: 340px;
-        overflow: scroll;
-        -webkit-transform:perspective(400) rotate3d(1,0,0,-90deg);
-        -webkit-transform-origin:50% 0;
-        -webkit-transition:350ms;
-        -moz-transition:350ms;
-        -o-transition:350ms;
-        transition:350ms;
+        display: none;
+        overflow: hidden;
+        position: absolute;
 
         &.opened {
-            max-height:1000px;
-            -webkit-transform:perspective(400) rotate3d(0,0,0,0);
+            max-height:280px;
+            display: inherit;
         }
 
         > .filters {
-            font-size: 1.35rem;
+            position: relative;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            font-size: 1.15rem;
             list-style: none;
             text-align: left;
             padding: 0;
+            max-height: 240px;
 
             > .item {
                 padding: 5px 10px;
@@ -130,11 +134,11 @@
         }
 
         > .filterinput {
-            width: 100%;
+            margin: 0 15px;
             border: none;
             border-bottom: 1px solid $gray;
             font-size: 1.35rem;
-            padding: 0 10px;
+            position: relative;
 
             &:focus {
                 outline: none;

@@ -44,7 +44,7 @@ export const updateCollection = ({ dispatch }, collectionId, property) => new Pr
 export const removeChallenge = ({ dispatch }, challengeId) => new Promise(resolve => {
     collections.removeChallenge(challengeId).then(() => {
         dispatch(types.REMOVE_CHALLENGE, challengeId);
-        dispatch(types.SEND_EVENT, { type: 'success', message: 'Challenge removed.' });
+        dispatch(types.SEND_EVENT, { type: 'success', message: 'Collection removed.' });
         resolve();
     });
 });
