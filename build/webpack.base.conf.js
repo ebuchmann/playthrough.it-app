@@ -13,7 +13,7 @@ module.exports = {
         root: path.resolve(__dirname),
         extensions: ['', '.js', '.vue'],
         alias: {
-            src: path.resolve(__dirname, '../src'),
+            base: path.resolve(__dirname, '../src'),
             component: path.resolve(__dirname, '../src/components'),
             store: path.resolve(__dirname, '../src/vuex'),
             api: path.resolve(__dirname, '../src/api'),

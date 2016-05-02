@@ -1,4 +1,4 @@
-import { pub } from './api-config';
+import { pub } from 'base/api-config';
 
 export default {
     // Create new collection

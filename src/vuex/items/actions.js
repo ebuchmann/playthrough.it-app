@@ -1,5 +1,5 @@
 import * as types from 'store/mutation-types';
-import items from 'api/items';
+import items from './api';
 
 export const addGame = ({ dispatch }, collectionId, gameId) => new Promise((resolve, reject) => {
     items.addGame(collectionId, gameId).then(res => {

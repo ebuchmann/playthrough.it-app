@@ -1,5 +1,5 @@
 import * as types from 'store/mutation-types';
-import suggestions from 'api/suggestions';
+import suggestions from './api';
 
 export const suggestGame = ({ dispatch, state }, suggestion) => new Promise(resolve => {
     suggestions.suggestGame(suggestion).then(res => {

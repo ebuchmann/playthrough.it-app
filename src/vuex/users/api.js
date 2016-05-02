@@ -1,4 +1,4 @@
-import { pri } from './api-config';
+import { pri } from 'base/api-config';
 
 export default {
     // Updates your user info

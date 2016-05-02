@@ -1,5 +1,5 @@
 import * as types from 'store/mutation-types';
-import collections from 'api/collections';
+import collections from './api';
 
 export const addCollection = ({ dispatch }, title) => new Promise((resolve, reject) => {
     if (title) {

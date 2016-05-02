@@ -1,5 +1,5 @@
 import * as types from 'store/mutation-types';
-import games from 'api/games';
+import games from './api';
 
 export const changeFilter = ({ dispatch }, type) => {
     dispatch(types.CHANGE_FILTER, type);

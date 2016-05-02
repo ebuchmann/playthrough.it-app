@@ -1,4 +1,4 @@
-import { pub, pri } from './api-config';
+import { pub, pri } from 'base/api-config';
 
 export default {
     // Adds a game to a collection

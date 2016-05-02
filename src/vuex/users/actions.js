@@ -1,5 +1,5 @@
 import * as types from 'store/mutation-types';
-import users from 'api/users';
+import users from './api';
 
 export const changeBanner = ({ dispatch }, newBanner) => {
     dispatch(types.CHANGE_BANNER, newBanner);
