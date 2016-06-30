@@ -1,17 +1,16 @@
 <template>
     <div class="home-page">
 
-        <div class="hero">
-
-        </div>
-
         <div class="container">
-            <div class="left">
-                Left
+
+            <home-hero></home-hero>
+
+            <div class="homeleft">
+                <no-collection></no-collection>
+                <collection-overview></collection-overview>
             </div>
-            <div class="right">
-                Right
-                <button @click="sender()">Event</button>
+            <div class="homeright">
+                <activity-item></activity-item>
             </div>
         </div>
 
@@ -19,21 +18,27 @@
 </template>
 
 <script>
+    import HomeHero from 'component/HomeHero';
+    import NoCollection from 'component/NoCollection';
+    import CollectionOverview from 'component/CollectionOverview';
+    import ActivityItem from 'component/ActivityItem';
     import { sendEvent } from 'store/events/actions';
 
     export default {
         vuex: {
+            getters: {
+                currentUser: ({ users }) => users.currentUser,
+            },
             actions: {
                 sendEvent,
             },
         },
 
-        methods: {
-            sender() {
-                const types = ['success', 'warning', 'error', 'default'];
-                const number = Math.floor(Math.random() * 4);
-                this.sendEvent({ message: Math.random(), type: types[number] });
-            },
+        components: {
+            HomeHero,
+            NoCollection,
+            ActivityItem,
+            CollectionOverview,
         },
     };
 </script>
@@ -47,5 +52,12 @@
             height: 400px;
             background-color: $blue;
         }
+    }
+
+    .homeleft {
+        @include span(2 of 12);
+    }
+    .homeright {
+        @include span(7 of 12);
     }
 </style>

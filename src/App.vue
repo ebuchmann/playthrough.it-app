@@ -8,7 +8,7 @@
             <div class="container">
                 <nav class="top-nav">
                     <a class="link" v-link="'/'">
-                        <img class="logo" width="200px" src="assets/playthrough.it.svg" alt="Play Through It : Logo" />
+                        <img class="logo" width="200px" src="http://localhost:3033/img/playthrough.it.svg" alt="Play Through It : Logo" />
                     </a>
 
                     <div class="top-links">
@@ -23,7 +23,7 @@
                                 <a href="#" @click="doLogout()">Logout</a>
                             </div>
                         </click-menu>
-                        <a v-else @click="$broadcast('toggle::login-modal')">Login</a>
+                        <a v-else @click="setState('loginModal', true)">Login</a>
                     </ul>
                 </nav>
             </div>
@@ -32,7 +32,7 @@
         <router-view></router-view>
 
         <footer>
-            <img class="icon" src="./assets/footer.png" />
+            <img class="icon" src="http://localhost:3033/img/footer.png" />
             <p class="copyright">&copy;{{ new Date().getFullYear() }} PlayThrough.it</p>
         </footer>
     </div>
@@ -44,6 +44,7 @@
     import ClickMenu from 'component/ClickMenu';
     import PopupNotification from 'component/PopupNotification';
     import { logout } from 'store/users/actions';
+    import { setState } from 'store/state/actions';
 
     export default {
         store,
@@ -54,6 +55,7 @@
             },
             actions: {
                 logout,
+                setState,
             },
         },
 

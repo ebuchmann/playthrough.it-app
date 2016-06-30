@@ -1,9 +1,9 @@
 <template>
     <div>
-        <general-modal :show.sync="activeLogin" :width="'500px'">
-            <div class="login-modal">
+        <general-modal :show="opened" :width="'500px'" @click="setState('loginModal', false)">
+            <div class="login-modal" @click.stop>
                 <div :class="['busy', { active: loggingIn }]"></div>
-                <i class="close fa fa-times" @click="toggle"></i>
+                <i class="close fa fa-times" @click="setState('loginModal', false)"></i>
                 <p class="logintext">Log In</p>
 
                 <div class="login-buttons">
@@ -23,11 +23,11 @@
 <script>
     import GeneralModal from 'component/GeneralModal';
     import { getCurrentUser } from 'store/users/actions';
+    import { setState } from 'store/state/actions';
 
     export default {
         data() {
             return {
-                activeLogin: false,
                 loggingIn: false,
             };
         },
@@ -35,6 +35,10 @@
         vuex: {
             actions: {
                 getCurrentUser,
+                setState,
+            },
+            getters: {
+                opened: ({ state }) => state.loginModal,
             },
         },
 
@@ -43,10 +47,6 @@
         },
 
         methods: {
-            toggle() {
-                this.activeLogin = !this.activeLogin;
-            },
-
             doLogin(type) {
                 this.loggingIn = true;
                 const popup = window.open(`http://localhost:3033/auth/${type}`, 'Login to PlayThrough.it', 'scrollbars=yes,width=650,height=500');
@@ -57,15 +57,15 @@
 
                         this.getCurrentUser();
                         this.loggingIn = false;
-                        this.activeLogin = false;
+                        this.setState('loginModal', false);
                     }
                 }, 200);
             },
         },
 
         events: {
-            'toggle::login-modal'() {
-                this.toggle();
+            'close-modal'() {
+                debug('closing');
             },
         },
     };

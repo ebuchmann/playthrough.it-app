@@ -6,7 +6,7 @@ export const addCollection = ({ dispatch }, title) => new Promise((resolve, reje
         collections.createCollection(title).then(res => {
             if (res.status === 201) {
                 dispatch(types.ADD_COLLECTION, res.data.attributes);
-                resolve();
+                resolve(res.data.attributes);
             } else {
                 reject(res.data);
             }

@@ -8,6 +8,7 @@ import collections from 'store/collections/module';
 import items from 'store/items/module';
 import suggestions from 'store/suggestions/module';
 import events from 'store/events/module';
+import state from 'store/state/module';
 
 Vue.use(Vuex);
 Vue.config.debug = true;
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         items,
         suggestions,
         events,
+        state,
     },
     strict: debug,
     middlewares: [createLogger()],

@@ -29,3 +29,6 @@ export const GET_SUGGESTIONS = 'GET_SUGGESTIONS';
 // Events module
 export const SEND_EVENT = 'SEND_EVENT';
 export const CLEAR_EVENT = 'CLEAR_EVENT';
+
+// State module
+export const SET_STATE = 'SET_STATE';

@@ -5,11 +5,13 @@
                 <h2 class="title">{{ collection.title }}</h2>
                 <div class="left">
                     <span class="total">
-                        {{ collection.completed }} of {{ collection.games }} games
+                        <strong>{{ collection.completed }} of {{ collection.games }}</strong><br />
+                        games
                     </span>
                 </div>
                 <div class="right">
-                    {{percent}}%
+                    <strong>{{percent}}%</strong><br />
+                    complete
                 </div>
             </div>
             <div class="status">
