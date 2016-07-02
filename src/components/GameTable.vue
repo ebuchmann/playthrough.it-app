@@ -8,6 +8,7 @@
                             {{{ value.display | capitalize }}}
                             <span :class="direction > 0 ? 'asc' : 'desc'"></span>
                         </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody is="game-row" v-for="game in firstFifty | orderBy orderBy direction | filterBy customFilter" :game="game" :display="collection.display" :user_id="collection.user._id" transition="add-game"></tbody>

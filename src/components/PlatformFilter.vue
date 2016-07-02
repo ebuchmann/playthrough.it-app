@@ -1,18 +1,15 @@
 <template>
-    <div class="platform-filter {{opened ? 'opened' : ''}}" @click.stop>
-        <div class="current" @click="open">
-            {{ currentFilter.name }}
-        </div>
-        <div class="filtered-list {{opened ? 'opened' : ''}}">
-            <input class="filterinput" type="text" v-el:input v-model="filter"placeholder="Type to search..." />
-            <ul class="filters">
-                <li class="item {{filter.name === currentFilter.name ? 'selected' : ''}}"
-                v-for="filter in filteredList"
-                @click="selectItem(filter.type)">
-                {{ filter.name }}
-            </li>
+    <div class="platform-filter">
+        {{ opened }}
+        <input type="text" v-model="filter" v-el:input
+            @focus="open()"
+            @blur="close()"
+        />
+        <ul :class="['filtered-list', { opened: opened}]">
+            <li class="item" v-for="item in filteredList" @mousedown.prevent="selectFilter(item)">{{ item.name }}</li>
         </ul>
-        </div>
+
+        {{ currentFilter | json }}
     </div>
 </template>
 
@@ -23,6 +20,7 @@
         data() {
             return {
                 opened: false,
+                index: 0,
                 filter: '',
             };
         },
@@ -44,23 +42,24 @@
         },
 
         methods: {
+            selectFilter(item) {
+                this.changeFilter(item);
+                this.close();
+            },
+
             open() {
                 this.opened = true;
-                this.$nextTick(() => {
-                    this.$els.input.focus();
-                });
             },
 
-            selectItem(item) {
-                this.changeFilter(item);
-                this.opened = false;
-                this.filter = '';
+            close() {
+                if (this.opened) {
+                    this.opened = false;
+                    this.$els.input.blur();
+                }
             },
-        },
 
-        events: {
-            'hide::dropdown'() {
-                if (this.opened) this.opened = false;
+            test() {
+                debug('test');
             },
         },
     };
@@ -103,45 +102,23 @@
         display: none;
         overflow: hidden;
         position: absolute;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        font-size: 1.15rem;
+        list-style: none;
+        padding: 0;
+        max-height: 240px;
 
         &.opened {
-            max-height:280px;
-            display: inherit;
+            display: block;
         }
 
-        > .filters {
-            position: relative;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            font-size: 1.15rem;
-            list-style: none;
-            text-align: left;
-            padding: 0;
-            max-height: 240px;
+        > .item {
+            padding: 5px 10px;
+            cursor: pointer;
 
-            > .item {
-                padding: 5px 10px;
-                cursor: pointer;
-
-                &.selected {
-                    background: $blue-highlight;
-                }
-
-                &:hover {
-                    background-color: $green-highlight;
-                }
-            }
-        }
-
-        > .filterinput {
-            margin: 0 15px;
-            border: none;
-            border-bottom: 1px solid $gray;
-            font-size: 1.35rem;
-            position: relative;
-
-            &:focus {
-                outline: none;
+            &.selected, &:hover {
+                background: $blue-highlight;
             }
         }
     }

@@ -11,6 +11,7 @@
             <td v-if="display.date">{{ game.completed_on | date }}</td>
             <td v-if="display.rating">{{ game.rating }}</td>
             <td v-if="display.deaths">{{ game.deaths }}</td>
+            <td><i class="fa fa-bars"></i></td>
         </tr>
         <tr v-if="currentUser._id === user_id" is="game-row-edit" :game="game" :opened="opened"></tr>
     </tbody>
