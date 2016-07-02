@@ -1,6 +1,6 @@
 # App
 
-> Twitch front end thing
+> Front end for playthrough.it
 
 ## Build Setup
 
