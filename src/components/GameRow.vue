@@ -1,6 +1,6 @@
 <template>
     <tbody class="game-body">
-        <tr :class="['game-row', { opened: opened }]" @click="open">
+        <tr :class="['game-row', { opened: opened }]">
             <td class="icon -{{ game.status | lowercase | stripSpaces }}">
                 <i class="fa"></i>
             </td>
@@ -11,7 +11,15 @@
             <td v-if="display.date">{{ game.completed_on | date }}</td>
             <td v-if="display.rating">{{ game.rating }}</td>
             <td v-if="display.deaths">{{ game.deaths }}</td>
-            <td><i class="fa fa-bars"></i></td>
+            <td class="menu">
+                <popup-menu>
+                    <i class="fa fa-bars"></i>
+                    <ul class="menu">
+                        <li @click="opened = !opened">Edit Game</li>
+                        <li @click="test('b')">Remove Game</li>
+                    </ul>
+                </popup-menu>
+            </td>
         </tr>
         <tr v-if="currentUser._id === user_id" is="game-row-edit" :game="game" :opened="opened"></tr>
     </tbody>
@@ -19,6 +27,7 @@
 
 <script>
     import GameRowEdit from 'component/GameRowEdit';
+    import PopupMenu from 'component/PopupMenu';
 
     export default {
         props: ['game', 'display', 'user_id'],
@@ -31,6 +40,7 @@
 
         components: {
             GameRowEdit,
+            PopupMenu,
         },
 
         data() {
@@ -43,6 +53,10 @@
             open() {
                 this.opened = !this.opened;
             },
+
+            test(val) {
+                debug(val);
+            },
         },
     };
 </script>
@@ -51,20 +65,34 @@
     @import '../css/includes';
 
     .game-row {
-        padding: 5px;
+        padding: 0;
         position: relative;
         background-color: $gray-lighter;
         cursor: pointer;
         border-left: 4px solid transparent;
         transition: $all-fast;
 
+        > .menu {
+            text-align: center;
+
+            &:hover {
+                background: $gray-light;
+            }
+        }
+
         &.opened {
             border-left: 4px solid $blue;
         }
 
+        > td {
+            padding: 0;
+            margin: 0;
+            display: table-cell;
+        }
+
         > .icon {
             font-size: 1.6rem;
-            padding: 5px;
+            padding: 0;
             cursor: pointer;
             position: relative;
             width: 44px;
